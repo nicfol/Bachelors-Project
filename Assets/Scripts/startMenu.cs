@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class startMenu : MonoBehaviour {
 
@@ -34,15 +35,15 @@ public class startMenu : MonoBehaviour {
 
     public void GoToAchievements()
     {
-        Application.LoadLevel("Achievements");
+        SceneManager.LoadScene("Achievements");
     }
     public void GoToLearnCPR()
     {
-        Application.LoadLevel("LearnCPR");
+        SceneManager.LoadScene("LearnCPR");
     }
     public void Back()
     {
-        Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
     public void ExitGame()
     {
