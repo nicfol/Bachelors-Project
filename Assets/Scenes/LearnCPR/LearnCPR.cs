@@ -21,9 +21,9 @@ public class LearnCPR : MonoBehaviour {
         SceneManager.LoadScene("AED");
     }
 
-    public void StabilizedSP()
+    public void RecoveryPos()
     {
-        SceneManager.LoadScene("StabilizedSP");
+        SceneManager.LoadScene("RecoveryPos");
     }
 
     public void BackToMain()
