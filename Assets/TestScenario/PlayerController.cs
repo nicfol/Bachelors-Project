@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour {
     }
     
     IEnumerator movePlayer() {
+        //Change camera movement speed after intro scene
+        if(question == 1.0f) {
+            transitionDuration = 1.0f;
+        }
+                
         float t = 0.0f;
         Vector3 startingPos = player.transform.position;
         Vector3 camStartingPos = cam.transform.position;
