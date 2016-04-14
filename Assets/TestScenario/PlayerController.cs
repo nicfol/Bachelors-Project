@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 
     private float transitionDuration = 2.5f;
 
-	// Use this for initialization
 	void Start () {
         if(cam == null) {
             cam = Camera.main;
@@ -26,7 +25,6 @@ public class PlayerController : MonoBehaviour {
 	    StartCoroutine("movePlayer");
 	}
 	
-	// Update is called once per frame
 	void Update () {        
         Debug.Log(question + " " + transitionDuration);
             
