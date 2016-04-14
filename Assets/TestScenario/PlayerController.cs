@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
         }
 	}
     
-    public static void startMovePlayer() {
+    public void startMovePlayer() {
         StartCoroutine("movePlayer");
     }
     
