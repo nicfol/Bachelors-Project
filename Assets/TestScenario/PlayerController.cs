@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour {
         }
 	}
     
+    public static void startMovePlayer() {
+        StartCoroutine("movePlayer");
+    }
+    
     IEnumerator movePlayer() {
         float t = 0.0f;
         Vector3 startingPos = player.transform.position;
