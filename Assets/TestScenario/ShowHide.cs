@@ -15,15 +15,23 @@ public class ShowHide : MonoBehaviour {
     
     public void showhideGO() {
     
-    if(gameObject.activeSelf == true) {
-        
-        gameObject.SetActive(false);
-        
-    } else if(gameObject.activeSelf == false) {
-        
-        gameObject.SetActive(true);
-        
+        if(gameObject.activeSelf == true) {
+            
+            gameObject.SetActive(false);
+            
+        } else if(gameObject.activeSelf == false) {
+            
+            gameObject.SetActive(true);
+            
+        }
+    
     }
     
-}
+    public void disableGO(){
+        gameObject.SetActive(false);
+    }
+    
+    public void activateGO() {
+        gameObject.SetActive(true);
+    }
 }
