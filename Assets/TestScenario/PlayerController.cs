@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
     
     public GameObject player;
     public Camera cam;
+    
+    public GameObject correctBox;
 
     private int question = 0;
     private int noOfQuestions;
@@ -81,6 +83,10 @@ public class PlayerController : MonoBehaviour {
             Vector3 camStartingPos = cam.transform.position;
             while (t < 1.0f) {
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);
+                
+                if(t > 1) {
+                    correctBox.gameObject.SetActive(false);
+                }
                 
                 if(playerTargets[question] != null) {
                     player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
