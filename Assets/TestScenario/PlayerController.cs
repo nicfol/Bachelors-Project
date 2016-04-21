@@ -5,16 +5,21 @@ public class PlayerController : MonoBehaviour {
     
     public GameObject player;
     public Camera cam;
+
+    private int question = 0;
+    private int noOfQuestions;
     
     public Transform[] playerTargets;
     public Transform[] cameraTargets;
     public float[] camZoom;
     
-    private int question = 0;
+    public GameObject[] questionObjects;
 
     private float transitionDuration = 2.5f;
 
 	void Start () {
+        getNumberOfQuestions();
+        
         if(cam == null) {
             cam = Camera.main;
         }
@@ -22,22 +27,32 @@ public class PlayerController : MonoBehaviour {
             player = GameObject.Find("Player");
         }
         
-	    StartCoroutine("movePlayer");
+	    startMovePlayer();
 	}
 	
 	void Update () {        
         Debug.Log(question + " " + transitionDuration);
             
         if(Input.GetKeyDown("space")) {
-            StartCoroutine("movePlayer");
+            startMovePlayer();
         }
+        
 	}
     
+    public void getNumberOfQuestions() {
+        noOfQuestions = GameObject.Find("QuestionBoxes(Canvas)").transform.childCount;
+        Debug.Log("No of questions: " + noOfQuestions);
+    }
+    
     public void startMovePlayer() {
+        if(question != 0) {
+            questionObjects[question].gameObject.SetActive(false);
+        }
         StartCoroutine("movePlayer");
     }
     
     IEnumerator movePlayer() {
+                
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
@@ -62,6 +77,7 @@ public class PlayerController : MonoBehaviour {
             }
             yield return null;
         }
+        questionObjects[question].gameObject.SetActive(true);
         question += 1;
     }
     
