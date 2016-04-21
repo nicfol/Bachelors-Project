@@ -14,16 +14,13 @@ public class AchievementPopup : MonoBehaviour {
     public RectTransform target;
     private Vector2 normalPosition;
     float step;
-    public float speed;
-
-    private IEnumerator fadeAlpha;
+    public float speed = 500;
 
     public void DisplayPopup(string achievementName) 
     {
         achievementBoxContainer.SetActive(true);
         StartCoroutine("DropWindow");
         achievementText.text = achievementName;
-        //SetAlpha();
     }
 
     IEnumerator DropWindow()
