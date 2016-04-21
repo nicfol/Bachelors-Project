@@ -7,9 +7,9 @@ public class ShowHide : MonoBehaviour {
     
 	// Use this for initialization
 	void Start () {
-	    if(disableOnStart) {
-            gameObject.SetActive(false);
-        }
+	    //if(disableOnStart) {
+          //  gameObject.SetActive(false);
+        //}
 	}
 	
 	// Update is called once per frame

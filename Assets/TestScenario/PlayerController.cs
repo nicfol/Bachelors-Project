@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour {
         }
         
         if (question == noOfQuestions) {
+            //SHOW FINAL END SCENE HERE
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
         } else if(question <= noOfQuestions) {        
             float t = 0.0f;
