@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class AchievementHandler : MonoBehaviour {
 
-    public GameObject checkmark_1;
+    //public GameObject checkmark_1;
+    //public Strings strings;
+    private Achievements achievements;
 
-    public Achievements achievements;
-
-    public AchievementPopup achievementPopup;
+    private AchievementPopup achievementPopup;
 
     // Use this for initialization
     void Start () {
@@ -23,22 +23,10 @@ public class AchievementHandler : MonoBehaviour {
         {
             Debug.Log("Space!");
             achievements.ach_1.isUnlocked = true;
-            checkmark_1.SetActive(true);
+      
             Debug.Log("Achievement: '" + achievements.ach_1.Name + " ' has been unlocked. ");
             achievementPopup.DisplayPopup(achievements.ach_1.Name);
         }
-
-        //achievements.achievementList
-
-        foreach(Achievement a in achievements.achievementList)
-        {
-            
-
-            //if(a.levelToUnlock == currentLevel )
-
-        }
-
-
     }
 
 

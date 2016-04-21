@@ -20,14 +20,19 @@ public class Achievements : MonoBehaviour {
         ach_3 = new Achievement { Name = "Save an infant", isUnlocked = false, levelToUnlock = 1 };
         ach_4 = new Achievement { Name = "You are just like a medic!", isUnlocked = false, levelToUnlock = 1 };
         ach_5 = new Achievement { Name = "Achievement #5", isUnlocked = false, levelToUnlock = 1 };
-
-        achievementList.Add(new Achievement { Name = "To the rescue!", isUnlocked = false, levelToUnlock = 1 });
-
+        achievementList.Add(ach_1);
+        achievementList.Add(ach_2);
+        achievementList.Add(ach_3);
+        achievementList.Add(ach_4);
+        achievementList.Add(ach_5);
     }
 
     // Update is called once per frame
     void Update() {
-        
+        //foreach(var a in achievementList)
+        //{
+        //    if(a.levelToUnlock = )
+        //}
 	}
 }
 
