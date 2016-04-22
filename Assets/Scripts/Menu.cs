@@ -4,14 +4,20 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
+    
+    public void GoToLearnCPR()
+    {
+        SceneManager.LoadScene("LearnCPR");
+    }
+    
+    public void GoToChallenges()
+    {
+        SceneManager.LoadScene("Challenges");
+    }
 
     public void GoToAchievements()
     {
         SceneManager.LoadScene("Achievements");
-    }
-    public void GoToLearnCPR()
-    {
-        SceneManager.LoadScene("LearnCPR");
     }
 
     public void GoToFacts()

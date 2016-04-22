@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Camera cam;
     
     public GameObject correctBox;
+    public GameObject EndSceneObject;
 
     private int question = 0;
     private int noOfQuestions;
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour {
         
         if (question == noOfQuestions) {
             //SHOW FINAL END SCENE HERE
+            EndSceneObject.gameObject.SetActive(true);
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
         } else if(question <= noOfQuestions) {        
             float t = 0.0f;
