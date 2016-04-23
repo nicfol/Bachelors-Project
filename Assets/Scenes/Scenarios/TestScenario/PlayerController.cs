@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour {
     private int question = 0;
     private int noOfQuestions;
     
-    private int correctAnswers;
-    private int wrongAnswers;
+    private int correctAnswers = 0;
+    private int wrongAnswers = 0;
     
     public Transform[] playerTargets;
     public Transform[] cameraTargets;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         getNumberOfQuestions();
         
+        //Automatically set camera and player if they aren't       
         if(cam == null) {
             cam = Camera.main;
         }
@@ -42,42 +43,41 @@ public class PlayerController : MonoBehaviour {
             }
         // ------- HACK ------- //
         
-	    startMovePlayer();
-	}
-	
-	void Update () {        
-        if(Input.GetKeyDown("space")) {
-            startMovePlayer();
-        }
-        
+        //Starts the scenario
+	    startNextQuestion();
 	}
     
+    //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
         noOfQuestions = GameObject.Find("QuestionBoxes(Canvas)").transform.childCount;
         Debug.Log("No of questions: " + noOfQuestions);
     }
     
+    //Add one to wrongAnswers
     public void addToWrongAnswer() {
         wrongAnswers++;
+        Debug.Log("Added one to wrongAnswers");
     }
     
+    //Add one to correctAnswers
     public void addToCorrectAnswer() {
         correctAnswers++;
+        Debug.Log("Added one to correctAnswers");
     }
     
-    public void startMovePlayer() {
+    //Method to start the coroutine nextQuestion
+    public void startNextQuestion() {
         Debug.Log(question);
-        StartCoroutine("movePlayer");
+        StartCoroutine("nextQuestion");
     }
     
-    IEnumerator movePlayer() {  
+    IEnumerator nextQuestion() {  
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
         }
         
         if (question == noOfQuestions) {
-            //SHOW FINAL END SCENE HERE
             EndSceneObject.gameObject.SetActive(true);
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
         } else if(question <= noOfQuestions) {        
