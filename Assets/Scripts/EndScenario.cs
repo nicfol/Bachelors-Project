@@ -15,10 +15,9 @@ public class EndScenario : MonoBehaviour {
     public GameObject star1;
     public GameObject star2;
     public GameObject star3;
-
+    
     // Use this for initialization
     void Start () {
-
         
         if(currentText == null)
         {
