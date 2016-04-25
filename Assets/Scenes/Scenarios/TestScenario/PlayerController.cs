@@ -48,6 +48,10 @@ public class PlayerController : MonoBehaviour {
 	    startNextQuestion();
 	}
     
+    public void Update() {
+        
+    }
+    
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
         //noOfQuestions = GameObject.Find("Answer Options").transform.childCount;
@@ -79,7 +83,6 @@ public class PlayerController : MonoBehaviour {
             transitionDuration = 1.0f;
         }
         
-        
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
@@ -88,7 +91,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 startingPos = player.transform.position;    //Save the players starting position
             Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
             while (t < 1.0f) {
-                t += Time.deltaTime * (Time.timeScale/transitionDuration);
+                t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
                 
                 if(t > 1) { //Set the correct answer box to enabled
                     correctBox.gameObject.SetActive(false);
