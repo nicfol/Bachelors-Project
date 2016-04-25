@@ -79,35 +79,37 @@ public class PlayerController : MonoBehaviour {
             transitionDuration = 1.0f;
         }
         
-        if (question == noOfQuestions) {
-            EndSceneObject.gameObject.SetActive(true);
+        
+        if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
+            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
-        } else if(question <= noOfQuestions) {        
+        } else if(question <= noOfQuestions) {  //Run during any other question        
             float t = 0.0f;
-            Vector3 startingPos = player.transform.position;
-            Vector3 camStartingPos = cam.transform.position;
+            Vector3 startingPos = player.transform.position;    //Save the players starting position
+            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
             while (t < 1.0f) {
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);
                 
-                if(t > 1) {
+                if(t > 1) { //Set the correct answer box to enabled
                     correctBox.gameObject.SetActive(false);
                 }
                 
-                if(playerTargets[question] != null) {
+                if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
                     player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
                 }
                 
-                if(cameraTargets[question] != null) {
+                if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
                     cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
                     
-                    if(camZoom[question] != null && cam.orthographicSize != camZoom[question]) {
-                        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);
+                    //Changes the cameras zoom if it's not null, not equals to the current zoom and not equals zero
+                    if(camZoom[question] != null && cam.orthographicSize != camZoom[question] && camZoom[question] != 0.0f) {
+                        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);   //Zooms the camera
                     }                
                 }
                 yield return null;
             }
-            questionObjects[question].gameObject.SetActive(true);
-            question += 1;
+            questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
+            question += 1;  //Adds one to the question so we can move on to the next question
         }
     }
     
