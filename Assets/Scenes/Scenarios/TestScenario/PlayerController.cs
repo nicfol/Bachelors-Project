@@ -16,11 +16,12 @@ public class PlayerController : MonoBehaviour {
     private int correctAnswers = 0;
     private int wrongAnswers = 0;
     
+    public GameObject[] questionObjects;
+    
     public Transform[] playerTargets;
     public Transform[] cameraTargets;
     public float[] camZoom;
     
-    public GameObject[] questionObjects;
 
     private float transitionDuration = 2.5f;
     
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour {
             float t = 0.0f;
             Vector3 startingPos = player.transform.position;    //Save the players starting position
             Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
-            while (t < 1.0f) {
+            while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
                 
                 if(t > 1) { //Set the correct answer box to disabled
