@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
             while (t < 1.0f) {
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
                 
-                if(t > 1) { //Set the correct answer box to enabled
+                if(t > 1) { //Set the correct answer box to disabled
                     correctBox.gameObject.SetActive(false);
                 }
                 
