@@ -5,11 +5,20 @@ using System;
 
 public class SaveData : MonoBehaviour {
 
-
+    // Used to represent test participant number - this is just temporary.
     public int count = 1;
 	
-	// Update is called once per frame
-    public void SaveDataToFile()
+    ///<summary>
+    /// Call to save all data. All data is saved in ONE file called Data.txt, while one file per participant is also saved seperately.    
+    ///</summary>
+    public void SaveAllData()
+    {
+        SaveDataToOneFile();
+        SaveOneFilePerParticipant(count);
+    }
+
+	// Used to save all data in one single file
+    private void SaveDataToOneFile()
     {
         // For Android - path = Application.persistentDataPath + "/Data.txt";
         // For Windows - path = @"c:\P6Data\Data.txt";
@@ -31,6 +40,20 @@ public class SaveData : MonoBehaviour {
             count++;
             string appendText = count + "," + Data.correctAnswers.Count.ToString() + "," + Data.wrongAnswers.Count.ToString() + "," + Data.timesAnswered.ToString() + Environment.NewLine;
             File.AppendAllText(path, appendText);
+        }
+    }
+
+
+    // Used to save single files
+    private void SaveOneFilePerParticipant(int filename)
+    {
+        //filename = count.ToString();
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + count.ToString() + ".txt";
+
+        if (!File.Exists(path))
+        {
+            string[] createText = { Data.correctAnswers.Count.ToString() + "," + Data.wrongAnswers.Count.ToString() + "," + Data.timesAnswered.ToString() };
+            File.WriteAllLines(path, createText);
         }
     }
 }
