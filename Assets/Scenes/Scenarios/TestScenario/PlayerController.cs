@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
     
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
-        noOfQuestions = GameObject.Find("QuestionBoxes(Canvas)").transform.childCount;
+        noOfQuestions = GameObject.Find("Answer Options").transform.childCount;
         Debug.Log("No of questions: " + noOfQuestions);
     }
     
