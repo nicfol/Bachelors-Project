@@ -22,11 +22,11 @@ public class AnswerButton : MonoBehaviour {
             correctAnswerWindow.SetActive(true);
             windowActive = true;
             // Increment times answered and correct
-            Data.timesAnswered += 1;
-            Data.timesCorrect += 1;
+            //Data.timesAnswered += 1;
+            //Data.timesCorrect += 1;
             
             // Add correct answer to the List of correct answers
-            Data.correctAnswers.Add(question.text);
+            //Data.correctAnswers.Add(question.text);
         }
     }
 
@@ -38,10 +38,10 @@ public class AnswerButton : MonoBehaviour {
             wrongAnswerWindow.SetActive(true);
             windowActive = true;
             // Increment times answered
-            Data.timesAnswered += 1;
+            //Data.timesAnswered += 1;
 
             // Add wrong answer to List of wrong answers
-            Data.wrongAnswers.Add(question.text);
+            //Data.wrongAnswers.Add(question.text);
         }
     }
 
