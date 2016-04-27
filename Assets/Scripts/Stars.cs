@@ -10,7 +10,7 @@ public class Stars : MonoBehaviour {
     public bool scenario_1 = false;
     public bool scenario_2 = false;
 
-    private Scenario s;
+    public Scenario s;
 
 	// Use this for initialization
 	void Start () {
