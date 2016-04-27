@@ -30,7 +30,7 @@ public class SaveData : MonoBehaviour {
         if (!File.Exists(path))
         {
             // Create a file to write to.
-            string[] createText = { count + "," + Data.correctAnswers.Count.ToString() + "," + Data.wrongAnswers.Count.ToString() + "," + Data.timesAnswered.ToString() };
+            string[] createText = { count + "," + Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() };
             File.WriteAllLines(path, createText);
         }
         else
@@ -38,7 +38,7 @@ public class SaveData : MonoBehaviour {
             // This text is always added, making the file longer over time
             // if it is not deleted.
             count++;
-            string appendText = count + "," + Data.correctAnswers.Count.ToString() + "," + Data.wrongAnswers.Count.ToString() + "," + Data.timesAnswered.ToString() + Environment.NewLine;
+            string appendText = count + "," + Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() + Environment.NewLine;
             File.AppendAllText(path, appendText);
         }
     }
@@ -52,7 +52,7 @@ public class SaveData : MonoBehaviour {
 
         if (!File.Exists(path))
         {
-            string[] createText = { Data.correctAnswers.Count.ToString() + "," + Data.wrongAnswers.Count.ToString() + "," + Data.timesAnswered.ToString() };
+            string[] createText = { Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() };
             File.WriteAllLines(path, createText);
         }
     }
