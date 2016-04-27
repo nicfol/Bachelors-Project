@@ -4,28 +4,23 @@ using System.Collections.Generic;
 
 public class AchievementHandler : MonoBehaviour {
 
-    //public GameObject checkmark_1;
-    //public Strings strings;
     private Achievements achievements;
-
     private AchievementPopup achievementPopup;
 
     // Use this for initialization
     void Start () {
-        achievements = GetComponent<Achievements>();
-        achievementPopup = GetComponent<AchievementPopup>();
+        achievements = gameObject.GetComponent<Achievements>();
+        achievementPopup = gameObject.GetComponent<AchievementPopup>();
+        
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown("space"))
+        if (!Data.ach2.isUnlocked)
         {
-            Debug.Log("Space!");
-            achievements.ach_1.isUnlocked = true;
-      
-            Debug.Log("Achievement: '" + achievements.ach_1.Name + " ' has been unlocked. ");
-            achievementPopup.DisplayPopup(achievements.ach_1.Name);
+            Data.ach2.isUnlocked = true;
+            achievementPopup.DisplayPopup(Data.ach2.Name);
         }
     }
 

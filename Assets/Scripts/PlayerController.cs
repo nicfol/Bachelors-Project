@@ -5,7 +5,11 @@ public class PlayerController : MonoBehaviour {
     
     public GameObject player;
     public Camera cam;
-    
+
+    public GameObject achievementManager;
+    private Achievements achievements;
+    private AchievementPopup achievementPopup;
+
     public GameObject correctBox;
     public GameObject EndSceneObject;
     public GameObject AnswerOptionsObject;
@@ -26,6 +30,9 @@ public class PlayerController : MonoBehaviour {
     private float transitionDuration = 2.5f;
     
 	void Start () {
+        achievements = achievementManager.GetComponent<Achievements>();
+        achievementPopup = achievementManager.GetComponent<AchievementPopup>();
+
         getNumberOfQuestions();
         
         //Automatically set camera and player if they aren't       
@@ -50,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 	}
     
     public void Update() {
-        
+
     }
     
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
@@ -85,6 +92,11 @@ public class PlayerController : MonoBehaviour {
         }
         
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
+            if (!Data.ach1.isUnlocked)
+            {
+                Data.ach1.isUnlocked = true;
+                achievementPopup.DisplayPopup(Data.ach1.Name);
+            }
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
         } else if(question <= noOfQuestions) {  //Run during any other question        
