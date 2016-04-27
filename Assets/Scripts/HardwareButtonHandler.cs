@@ -20,7 +20,7 @@ public class HardwareButtonHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    if(Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("HEJ");
+            Debug.Log("Back button pressed, returns to " + previousScene);
             SceneManager.LoadScene(previousScene);
         }
 	}
