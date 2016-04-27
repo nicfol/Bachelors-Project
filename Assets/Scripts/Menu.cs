@@ -29,6 +29,12 @@ public class Menu : MonoBehaviour {
     {
         SceneManager.LoadScene("Facts");
     }
+
+    public void ReloadCurrentScene()
+    {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+    }
     public void ExitGame()
     {
         Application.Quit();
