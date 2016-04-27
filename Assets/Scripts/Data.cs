@@ -19,7 +19,7 @@ public class Data : MonoBehaviour {
     {
         achievements.Add(new Achievement { Name = "Du har gennemført et scenarie !", isUnlocked = false });
         achievements.Add(new Achievement { Name = "Nysgerrig", isUnlocked = false });
-        achievements.Add(new Achievement { Name = "Save an infant", isUnlocked = false });
+        achievements.Add(new Achievement { Name = "Replace this name plz.", isUnlocked = false });
         achievements.Add(new Achievement { Name = "You are just like a medic!", isUnlocked = false });
         achievements.Add(new Achievement { Name = "Achievement #5", isUnlocked = false });
 
