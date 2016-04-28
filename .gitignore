@@ -5,6 +5,7 @@
 /[Bb]uilds/
 /Assets/AssetStoreTools*
 
+/.vscode/
 /Assets/VSCode/
 /Assets/VSCode.meta
 
