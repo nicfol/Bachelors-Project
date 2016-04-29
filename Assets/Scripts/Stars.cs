@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Stars : MonoBehaviour {
 
@@ -10,41 +11,54 @@ public class Stars : MonoBehaviour {
     public bool scenario_1 = false;
     public bool scenario_2 = false;
 
-    public Scenario s;
+    private PlayerController player;
+
+    string currentScene;
+
+    [HideInInspector]
+    public Scenario scenario;
 
 	// Use this for initialization
 	void Start () {
-        s = new Scenario();
-        if (scenario_1)
+        currentScene = SceneManager.GetActiveScene().name;
+        if(currentScene == "Scenario 1" || currentScene == "Scenario 2")
         {
-            s = Data.scenario_1;
-        } else if (scenario_2)
-        {
-            s = Data.scenario_2;
+            player = GameObject.Find("Scenario Handler").GetComponent<PlayerController>();
+            scenario = player.currentScenario;
         }
         else
         {
-            Debug.Log("Stars script: You forgot to select scenario.");
+            if (scenario_1)
+            {
+                scenario = Data.ScenarioWithMostStars(1);
+            }
+
+            if (scenario_2)
+            {
+                scenario = Data.ScenarioWithMostStars(2);
+            }
         }
+
+
     }
 
     // Update is called once per frame
     void Update () {
-        if (s.Stars == 3)
+        if (scenario.Stars == 3)
         {
             // Show 3 stars
             star1.SetActive(true);
             star2.SetActive(true);
             star3.SetActive(true);
         }
-        else if (s.Stars == 2)
+        else if (scenario.Stars == 2)
         {
             // Show 2 stars
             star1.SetActive(true);
             star2.SetActive(true);
             star3.SetActive(false);
         }
-        else if (s.Stars == 1)
+        else if (scenario.Stars == 1)
         {
             // Show 1 star  
             star1.SetActive(true);
