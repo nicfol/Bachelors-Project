@@ -14,7 +14,7 @@ public class Challenge : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(previousChallenge.GetComponent<Stars>().s.Stars >= 2)
+	    if(previousChallenge.GetComponent<Stars>().scenario.Stars >= 2)
         {
             overlay.SetActive(false);
         }

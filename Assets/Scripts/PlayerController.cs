@@ -25,11 +25,27 @@ public class PlayerController : MonoBehaviour {
     public Transform[] playerTargets;
     public Transform[] cameraTargets;
     public float[] camZoom;
-    
+
+    public int scenarioNumber;
+
+    [HideInInspector]
+    private Scenario newScenario;
+    public Scenario currentScenario;
+
+    public int threeStarsMin = 12;
+    public int twoStarsMin = 9;
+    public int oneStarMin = 7;
+
 
     private float transitionDuration = 2.5f;
     
 	void Start () {
+        newScenario = new Scenario();
+
+        // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
+        Data.scenario_1.Add(newScenario);
+        currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
+
         achievements = achievementManager.GetComponent<Achievements>();
         achievementPopup = achievementManager.GetComponent<AchievementPopup>();
 
@@ -69,13 +85,15 @@ public class PlayerController : MonoBehaviour {
     
     //Add one to wrongAnswers
     public void addToWrongAnswer() {
-        wrongAnswers++;
+        currentScenario.wrongAnswers++;
+        currentScenario.totalAnswers++;
         Debug.Log("Added one to wrongAnswers");
     }
     
     //Add one to correctAnswers
     public void addToCorrectAnswer() {
-        correctAnswers++;
+        currentScenario.correctAnswers++;
+        currentScenario.totalAnswers++;
         Debug.Log("Added one to correctAnswers");
     }
     
@@ -84,7 +102,7 @@ public class PlayerController : MonoBehaviour {
         Debug.Log(question);
         StartCoroutine("nextQuestion");
     }
-    
+
     IEnumerator nextQuestion() {  
         //Change camera movement speed after intro scene
         if(question == 1.0f) {

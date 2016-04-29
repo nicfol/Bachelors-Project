@@ -4,34 +4,16 @@ using UnityEngine.UI;
 
 public class EndScenario : MonoBehaviour {
 
-    public int numberOfQuestions = 14;
-    public int threeStarsMin = 12;
-    public int twoStarsMin = 9;
-    public int oneStarMin = 7;
-
     public Text currentText;
 
-    public bool scenario_1;
-    public bool scenario_2;
-
+    private PlayerController player;
     private Scenario scenario;
 
     // Use this for initialization
     void Start () {
+        player = GameObject.Find("Scenario Handler").GetComponent<PlayerController>();
 
-        if (scenario_1)
-        {
-            scenario = Data.scenario_1;
-        }
-        else if (scenario_2)
-        {
-            scenario = Data.scenario_2;
-        }
-        else
-        {
-            Debug.Log("Stars script: You forgot to set the ID of the scenario.");
-        }
-
+        scenario = player.currentScenario;
 
         if (currentText == null)
         {
@@ -43,21 +25,21 @@ public class EndScenario : MonoBehaviour {
 	void Update () {
 
 
-        currentText.text = "You used "+ scenario.timesAnswered.ToString() + " attempts.\nYou got " + scenario.timesCorrect.ToString() + " correct answers.\n You got " + scenario.wrongAnswers.Count.ToString() + " wrong answers.";
+        currentText.text = "You used "+ scenario.totalAnswers.ToString() + " attempts.\nYou got " + scenario.correctAnswers.ToString() + " correct answers.\n You got " + scenario.wrongAnswers.ToString() + " wrong answers.";
 
-        if (scenario.timesCorrect >= threeStarsMin)
+        if (scenario.correctAnswers >= player.threeStarsMin)
         {
             // Show 3 stars
             scenario.Stars = 3;
 
         }
-        else if (scenario.timesCorrect >= twoStarsMin)
+        else if (scenario.correctAnswers >= player.twoStarsMin)
         {
             // Show 2 stars
             scenario.Stars = 2;
 
         }
-        else if(scenario.timesCorrect >= oneStarMin)
+        else if(scenario.correctAnswers >= player.oneStarMin)
         {
             // Show 1 star  
             scenario.Stars = 1;
