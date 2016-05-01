@@ -7,21 +7,22 @@ public class AchievementHandler : MonoBehaviour {
 
     private Achievements achievements;
     private AchievementPopup achievementPopup;
-    bool achievementsLoaded = false;
+    public static bool achievementsLoaded = false;
 
     // Use this for initialization
     void Start () {
         achievements = gameObject.GetComponent<Achievements>();
         achievementPopup = gameObject.GetComponent<AchievementPopup>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
+
         if (!achievementsLoaded)
         {
             Data.InitializeAchievements();
             achievementsLoaded = true;
         }
+    }
+	
+	// Update is called once per frame
+	void Update () {
 
         if(SceneManager.GetActiveScene().name == "Facts")
         {
