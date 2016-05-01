@@ -5,19 +5,7 @@ using System;
 
 public class SaveData : MonoBehaviour {
 
-    // Used to represent test participant number - this is just temporary.
-    public int count = 1;
-	
-    ///<summary>
-    /// Call to save all data. All data is saved in ONE file called Data.txt, while one file per participant is also saved seperately.    
-    ///</summary>
-    public void SaveAllData()
-    {
-        SaveDataToOneFile();
-        SaveOneFilePerParticipant(count);
-    }
-
-	// Used to save all data in one single file
+    // Used to save all data in one single file
     private void SaveDataToOneFile()
     {
         // For Android - path = Application.persistentDataPath + "/Data.txt";
@@ -37,7 +25,7 @@ public class SaveData : MonoBehaviour {
         {
             // This text is always added, making the file longer over time
             // if it is not deleted.
-            count++;
+            //count++;
             //string appendText = count + "," + Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() + Environment.NewLine;
             //File.AppendAllText(path, appendText);
         }
@@ -45,15 +33,28 @@ public class SaveData : MonoBehaviour {
 
 
     // Used to save single files
-    private void SaveOneFilePerParticipant(int filename)
+    private void SaveParticipantData ()
     {
         //filename = count.ToString();
-        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + count.ToString() + ".txt";
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
 
         if (!File.Exists(path))
         {
-            //string[] createText = { Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() };
-            //File.WriteAllLines(path, createText);
+            string[] createText;
+            string text;
+            for (int i = 0; i < Data.scenario_1.Count; i++)
+            {
+                
+                text = 
+                    "Participant: " + Data.ParticipantsName + Environment.NewLine +
+                    "Total answers: " + Data.scenario_1[i].totalAnswers.ToString() + Environment.NewLine +
+                    "Correct answers: " + Data.scenario_1[i].correctAnswers.ToString() + Environment.NewLine +
+                    "Wrong answers: " + Data.scenario_1[i].wrongAnswers.ToString() + Environment.NewLine
+                    ;
+                createText[i] = text;
+            }
+            
+            File.WriteAllLines(path, createText);
         }
     }
 }
