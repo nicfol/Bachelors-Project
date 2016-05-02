@@ -7,7 +7,7 @@ public class AchievementPopup : MonoBehaviour {
     public Text achievementText;
     public GameObject achievementBoxContainer;
 
-    private bool dropWindow = false;
+    public bool dropWindow = false;
     
     bool achievementBoxIsActive = false;
 
