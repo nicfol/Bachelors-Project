@@ -40,8 +40,23 @@ public class Menu : MonoBehaviour {
     {
         SceneManager.LoadScene("Scenario 1");
     }
+    
     public void ExitGame()
     {
         Application.Quit();
+    }
+    public void GoToBasicCPR()
+    {
+        SceneManager.LoadScene("BasicCPR");
+    }
+
+    public void GoToAED()
+    {
+        SceneManager.LoadScene("AED");
+    }
+
+    public void GoToRecoveryPos()
+    {
+        SceneManager.LoadScene("RecoveryPos");
     }
 }
