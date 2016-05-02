@@ -5,56 +5,145 @@ using System;
 
 public class SaveData : MonoBehaviour {
 
-    // Used to save all data in one single file
-    private void SaveDataToOneFile()
+    string previousScene;
+    bool save;
+
+    void Start()
     {
-        // For Android - path = Application.persistentDataPath + "/Data.txt";
-        // For Windows - path = @"c:\P6Data\Data.txt";
-        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + "Data.txt"; 
+        previousScene = PlayerPrefs.GetString("PrevScene");
 
-        Debug.Log("Saved to " + path);
+        //if (previousScene == "Scenario 1")
+        //{
+        //    SaveDataScenario1();
+        //}
 
-        // This text is added only once to the file.
-        if (!File.Exists(path))
+        //if(previousScene == "Scenario 2")
+        //{
+        //    SaveDataScenario2();
+        //}
+
+        if(previousScene == "Scenario 1" || previousScene == "Scenario 2")
         {
-            // Create a file to write to.
-            //string[] createText = { count + "," + Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() };
-            //File.WriteAllLines(path, createText);
-        }
-        else
-        {
-            // This text is always added, making the file longer over time
-            // if it is not deleted.
-            //count++;
-            //string appendText = count + "," + Data.scenario_1.correctAnswers.Count.ToString() + "," + Data.scenario_1.wrongAnswers.Count.ToString() + "," + Data.scenario_1.timesAnswered.ToString() + Environment.NewLine;
-            //File.AppendAllText(path, appendText);
+            SaveAllData();
         }
     }
 
 
-    // Used to save single files
-    private void SaveParticipantData ()
+    public void SaveDataScenario1()
     {
+        int lastScenario = Data.scenario_1.Count - 1;
         //filename = count.ToString();
-        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
-
+        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + "_Scenario1.txt";
+        string path = @"c:\P6Data\" + Data.ParticipantsName + "_Scenario1.txt";
         if (!File.Exists(path))
         {
-            string[] createText;
-            string text;
-            for (int i = 0; i < Data.scenario_1.Count; i++)
-            {
-                
-                text = 
-                    "Participant: " + Data.ParticipantsName + Environment.NewLine +
-                    "Total answers: " + Data.scenario_1[i].totalAnswers.ToString() + Environment.NewLine +
-                    "Correct answers: " + Data.scenario_1[i].correctAnswers.ToString() + Environment.NewLine +
-                    "Wrong answers: " + Data.scenario_1[i].wrongAnswers.ToString() + Environment.NewLine
-                    ;
-                createText[i] = text;
-            }
-            
+            string[] createText = new String[1];
+
+
+
+            createText[lastScenario] =
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Total time: " + Data.TotalTime.ToString() + Environment.NewLine;
+                ;
+
             File.WriteAllLines(path, createText);
+        }
+        else
+        {
+            string appendText =
+                Environment.NewLine + 
+                "Attempt: " + (lastScenario+1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Total time: " + Data.TotalTime.ToString() + Environment.NewLine
+            ;
+            File.AppendAllText(path, appendText);
+        }
+    }
+
+    void SaveDataScenario2()
+    {
+        int lastScenario = Data.scenario_2.Count - 1;
+
+        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + "_Scenario2.txt";
+        string path = @"c:\P6Data\" + Data.ParticipantsName + "_Scenario2.txt";
+        if (!File.Exists(path))
+        {
+            string[] createText = new String[1];
+
+            createText[lastScenario] =
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine
+                ;
+
+            File.WriteAllLines(path, createText);
+        }
+        else
+        {
+            string appendText =
+                Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine
+                ;
+            File.AppendAllText(path, appendText);
+        }
+    }
+
+    void SaveAllData()
+    {
+        int lastScenario;
+        int scenario;
+        string previousScene = PlayerPrefs.GetString("PrevScene");
+
+        if (previousScene == "Scenario 1")
+        {
+            lastScenario = Data.scenario_1.Count - 1;
+            scenario = 1;
+        }
+        else
+        {
+            lastScenario = Data.scenario_2.Count - 1;
+            scenario = 2;
+        }
+        //filename = count.ToString();
+        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + "_Scenario1.txt";
+        string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        if (!File.Exists(path))
+        {
+            string[] createText = new String[1];
+
+
+
+            createText[lastScenario] =
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+
+            File.WriteAllLines(path, createText);
+        }
+        else
+        {
+            string appendText =
+                Environment.NewLine +
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+
+            File.AppendAllText(path, appendText);
         }
     }
 }

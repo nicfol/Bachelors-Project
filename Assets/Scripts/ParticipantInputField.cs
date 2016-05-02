@@ -11,4 +11,9 @@ public class ParticipantInputField : MonoBehaviour {
         Data.ParticipantsName = input.text;
     }
 
+    public void InitialSceneTime()
+    {
+        float timeInScene = Time.time;
+        Data.InitialSceneTime = timeInScene;
+    }
 }

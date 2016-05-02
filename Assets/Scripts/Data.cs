@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class Data : MonoBehaviour {
 
     public static string ParticipantsName { get; set; }
+    public static float InitialSceneTime { get; set; }
+    public static float TotalTime { get; set; }
 
     public static List<Scenario> scenario_1 = new List<Scenario>();
     public static List<Scenario> scenario_2 = new List<Scenario>();
