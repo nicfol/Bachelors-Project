@@ -18,9 +18,18 @@ public class AchievementPopup : MonoBehaviour {
 
     public void DisplayPopup(string achievementName) 
     {
-        achievementBoxContainer.SetActive(true);
-        StartCoroutine("DropWindow");
-        achievementText.text = achievementName;
+        if(!dropWindow) {
+            achievementBoxContainer.SetActive(true);
+            StartCoroutine("DropWindow");
+            achievementText.text = achievementName;
+        } else {
+            StartCoroutine(wait4Seconds(achievementName));
+        }
+    }
+    
+    IEnumerator wait4Seconds(string achievementName){
+        yield return new WaitForSeconds(6);
+        DisplayPopup(achievementName);
     }
 
     IEnumerator DropWindow()
