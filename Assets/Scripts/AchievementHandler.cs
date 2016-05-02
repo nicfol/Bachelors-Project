@@ -23,7 +23,7 @@ public class AchievementHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         if(SceneManager.GetActiveScene().name == "Facts")
         {
             if (!Data.ach2.isUnlocked)
@@ -42,9 +42,4 @@ public class AchievementHandler : MonoBehaviour {
             }
         }
     }
-
-
-    
 }
-
-
