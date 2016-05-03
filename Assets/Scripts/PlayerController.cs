@@ -36,11 +36,21 @@ public class PlayerController : MonoBehaviour {
     public int twoStarsMin = 9;
     public int oneStarMin = 7;
 
+    [HideInInspector]
+    public int correctAnswerStreak;
+
+    [HideInInspector]
+    public bool noWrongAnswer;
+    [HideInInspector]
+    public bool endOfScenario;
 
     private float transitionDuration = 2.5f;
     
 	void Start () {
         newScenario = new Scenario();
+        correctAnswerStreak = 0;
+        endOfScenario = false;
+        noWrongAnswer = true;
 
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
         Data.scenario_1.Add(newScenario);
@@ -71,10 +81,6 @@ public class PlayerController : MonoBehaviour {
 	    startNextQuestion();
 	}
     
-    public void Update() {
-
-    }
-    
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
         //noOfQuestions = GameObject.Find("Answer Options").transform.childCount;
@@ -86,6 +92,8 @@ public class PlayerController : MonoBehaviour {
     public void addToWrongAnswer() {
         currentScenario.wrongAnswers++;
         currentScenario.totalAnswers++;
+        correctAnswerStreak = 0;
+        noWrongAnswer = false;
         Debug.Log("Added one to wrongAnswers");
     }
     
@@ -93,6 +101,7 @@ public class PlayerController : MonoBehaviour {
     public void addToCorrectAnswer() {
         currentScenario.correctAnswers++;
         currentScenario.totalAnswers++;
+        correctAnswerStreak++;
         Debug.Log("Added one to correctAnswers");
     }
     
@@ -109,11 +118,7 @@ public class PlayerController : MonoBehaviour {
         }
         
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
-            if (!Data.ach1.isUnlocked)
-            {
-                Data.ach1.isUnlocked = true;
-                achievementPopup.DisplayPopup(Data.ach1.Name);
-            }
+            endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
             Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
         } else if(question <= noOfQuestions) {  //Run during any other question        
