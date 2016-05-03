@@ -115,24 +115,43 @@ public class PlayerController : MonoBehaviour {
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
             StartCoroutine("queAmbulance");
             Debug.Log("Question == NoofQuestion");
+        } else if (question == 10) {
+            StartCoroutine("returnAED");
         } else if (question == noOfQuestions + 1) {
             endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
         } else if(question <= noOfQuestions) {
             StartCoroutine("nextQuestion");
+            if(question == 7) {
+                StartCoroutine("getAED");
+            }
         }
     }
     
+    IEnumerator aedGetter() {
+        
+        yield return null;
+    }
+    
+    IEnumerator getAED() {
+        
+        yield return null;        
+    }
+    
+    IEnumerator returnAED() {
+        
+        StartCoroutine("nextQuestion");
+        yield return null;
+    }
+    
     IEnumerator queAmbulance() {
-        //vector3 
         
         question ++;  //Adds one to the question so we can move on to the next question
         yield return null;
     }
 
     
-    IEnumerator nextQuestion() {
-        
+    IEnumerator nextQuestion() {        
         //Disable wrong option box + children
         wrongBox.gameObject.SetActive(false);
         for( int i = 0; i < wrongBox.transform.GetChild(0).transform.GetChild(0).transform.childCount; ++i ) {
@@ -185,8 +204,8 @@ public class PlayerController : MonoBehaviour {
             yield return null;
         }
 
-            questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
-            question ++;  //Adds one to the question so we can move on to the next question
+        questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
+        question ++;  //Adds one to the question so we can move on to the next question
         
     }
         
