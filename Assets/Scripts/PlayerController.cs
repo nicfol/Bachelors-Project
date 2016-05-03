@@ -114,9 +114,6 @@ public class PlayerController : MonoBehaviour {
         
         if (question == noOfQuestions) {
             StartCoroutine("queAmbulance");
-            Debug.Log("Question == NoofQuestion");
-        } else if (question == 16) {
-            StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 2.0f));
         } else if (question == noOfQuestions + 1) {
             endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
@@ -147,6 +144,7 @@ public class PlayerController : MonoBehaviour {
     }
         
     IEnumerator queAmbulance() {
+        yield return StartCoroutine(moveObject(GameObject.Find("Ambulance"), GameObject.Find("Ambulance Target 1"), 0.5f));
         
         question ++;  //Adds one to the question so we can move on to the next question
         yield return null;
