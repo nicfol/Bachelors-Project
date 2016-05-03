@@ -15,17 +15,25 @@ public class Quit : MonoBehaviour {
 	
 	}
 
-    public void SaveTotalTime()
+    public void SaveTimeAndProgess()
     {
         Data.TotalTime = Time.time - Data.InitialSceneTime;
 
         Debug.Log("Total time: " + Data.TotalTime);
 
-        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
-        string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+        //string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
         if (File.Exists(path))
         {
-            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString();
+            string[] createText = new String[1];
+
+            createText[0] = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Data.Progression.ToString();
+
+            File.WriteAllLines(path, createText);
+        }
+        else
+        {
+            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Data.Progression.ToString();
             File.AppendAllText(path, appendText);
         }
 
