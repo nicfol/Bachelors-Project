@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     private AchievementPopup achievementPopup;
 
     public GameObject correctBox;
+    public GameObject wrongBox;
     public GameObject EndSceneObject;
     public GameObject AnswerOptionsObject;
 
@@ -113,11 +114,14 @@ public class PlayerController : MonoBehaviour {
         StartCoroutine("nextQuestion");
     }
 
-    IEnumerator nextQuestion() {  
+    IEnumerator nextQuestion() {
+        wrongBox.gameObject.SetActive(false);
+          
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
-        }            
+        }
+                    
         //Disable and enable next setting text in the top
         if(question != 0) {
             settingText.transform.GetChild(question-1).gameObject.SetActive(false);
