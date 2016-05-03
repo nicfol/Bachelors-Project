@@ -20,16 +20,6 @@ public class EndScenario : MonoBehaviour {
             currentText = GameObject.Find("ScoreText").GetComponent<Text>();
         }
 
-        if (!Data.ach7.isUnlocked)
-        {
-            // ADD noWrongAnswer to PlayerController and then uncomment the below lines
-            //if (player.noWrongAnswer)
-            //{
-            //    Data.ach7.isUnlocked = true;
-            //    GameObject.Find("Achievement Manager").GetComponent<AchievementPopup>().DisplayPopup(Data.ach7.name);
-            //}
-        }
-
     }
 	
 	// Update is called once per frame

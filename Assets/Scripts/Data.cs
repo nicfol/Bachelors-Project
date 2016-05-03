@@ -25,6 +25,8 @@ public class Data : MonoBehaviour {
     public static Achievement ach5;
     public static Achievement ach6;
     public static Achievement ach7;
+    public static Achievement ach8;
+    public static Achievement ach9;
 
     public static void InitializeAchievements()
     {
@@ -35,6 +37,8 @@ public class Data : MonoBehaviour {
         ach5 = new Achievement { Name = "100% - Det er sku imponerende !", isUnlocked = false };
         ach6 = new Achievement { Name = "Du burde overvejer et job som livredder !", isUnlocked = false };
         ach7 = new Achievement { Name = "Du svarede ikke forkert en eneste gang !", isUnlocked = false };
+        ach8 = new Achievement { Name = "3 rigtige i træk !", isUnlocked = false };
+        ach9 = new Achievement { Name = "6 rigtige i træk !", isUnlocked = false };
 
         achievements.Add(ach1);
         achievements.Add(ach2);
@@ -43,7 +47,8 @@ public class Data : MonoBehaviour {
         achievements.Add(ach5);
         achievements.Add(ach6);
         achievements.Add(ach7);
-
+        achievements.Add(ach8);
+        achievements.Add(ach9);
     }
 
     public static Scenario ScenarioWithMostStars(int scenarioNumber)
