@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour {
         Debug.Log(question);
         
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
-            question += 1;  //Adds one to the question so we can move on to the next question
+            StartCoroutine("queAmbulance");
             Debug.Log("Question == NoofQuestion");
         } else if (question == noOfQuestions + 1) {
             endOfScenario = true;
@@ -121,6 +121,13 @@ public class PlayerController : MonoBehaviour {
         } else if(question <= noOfQuestions) {
             StartCoroutine("nextQuestion");
         }
+    }
+    
+    IEnumerator queAmbulance() {
+        //vector3 
+        
+        question ++;  //Adds one to the question so we can move on to the next question
+        yield return null;
     }
 
     
