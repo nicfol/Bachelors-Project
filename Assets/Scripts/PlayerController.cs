@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
     public Transform[] cameraTargets;
     public float[] camZoom;
     public Transform[] playerRotations;
+    
+    public GameObject settingText;
 
     public int scenarioNumber;
 
@@ -115,6 +117,12 @@ public class PlayerController : MonoBehaviour {
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
+        }            
+        //Disable and enable next setting text in the top
+        if(question != 0) {
+            settingText.transform.GetChild(question-1).gameObject.SetActive(false);
+            Debug.Log(settingText.transform.GetChild(question));
+            settingText.transform.GetChild(question).gameObject.SetActive(true);
         }
         
         if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
@@ -124,8 +132,10 @@ public class PlayerController : MonoBehaviour {
         } else if(question <= noOfQuestions) {  //Run during any other question        
             float t = 0.0f;
             Vector3 startingPos = player.transform.position;    //Save the players starting position
-            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position  
+            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
+                          
             while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
+                
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
                 
                 if(t > 1) { //Set the correct answer box to disabled
@@ -155,6 +165,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 yield return null;
             }
+
             questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
             question += 1;  //Adds one to the question so we can move on to the next question
         }
