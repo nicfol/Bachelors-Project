@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour {
     public Camera cam;
 
     public GameObject achievementManager;
-    private Achievements achievements;
     private AchievementPopup achievementPopup;
 
     public GameObject correctBox;
@@ -25,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     public Transform[] playerTargets;
     public Transform[] cameraTargets;
     public float[] camZoom;
+    public Transform[] playerRotations;
 
     public int scenarioNumber;
 
@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour {
         Data.scenario_1.Add(newScenario);
         currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
 
-        achievements = achievementManager.GetComponent<Achievements>();
         achievementPopup = achievementManager.GetComponent<AchievementPopup>();
 
         getNumberOfQuestions();
@@ -120,7 +119,7 @@ public class PlayerController : MonoBehaviour {
         } else if(question <= noOfQuestions) {  //Run during any other question        
             float t = 0.0f;
             Vector3 startingPos = player.transform.position;    //Save the players starting position
-            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
+            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position  
             while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
                 t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
                 
@@ -132,6 +131,15 @@ public class PlayerController : MonoBehaviour {
                     player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
                 }
                 
+                /* SHIT ISN'T WORKING
+                if(playerRotations[question] != null && t > 0.95f) {
+                    Vector3 dir = playerRotations[question].position - player.transform.position;
+                    float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+                    Debug.Log(angle);
+                    player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
+                }
+                */
+                               
                 if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
                     cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
                     
@@ -146,5 +154,5 @@ public class PlayerController : MonoBehaviour {
             question += 1;  //Adds one to the question so we can move on to the next question
         }
     }
-    
+        
 }
