@@ -6,6 +6,11 @@ public class ParticipantInputField : MonoBehaviour {
 
     public InputField input;
 
+    void Start()
+    {
+        Data.Scenes.Add("MainMenu");
+    }
+
     public void SetParticipantName()
     {
         Data.ParticipantsName = input.text;
