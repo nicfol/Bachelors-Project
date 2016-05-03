@@ -15,25 +15,35 @@ public class Data : MonoBehaviour {
 
     public static List<Achievement> achievements = new List<Achievement>();
 
+    // Variables for achievements
+    public static bool[] LearnCPRVisited = new bool[3];
+
     public static Achievement ach1;
     public static Achievement ach2;
     public static Achievement ach3;
     public static Achievement ach4;
     public static Achievement ach5;
+    public static Achievement ach6;
+    public static Achievement ach7;
 
     public static void InitializeAchievements()
     {
-        achievements.Add(new Achievement { Name = "Du har gennemført et scenarie !", isUnlocked = false });
-        achievements.Add(new Achievement { Name = "Nysgerrig", isUnlocked = false });
-        achievements.Add(new Achievement { Name = "Replace this name plz.", isUnlocked = false });
-        achievements.Add(new Achievement { Name = "You are just like a medic!", isUnlocked = false });
-        achievements.Add(new Achievement { Name = "Achievement #5", isUnlocked = false });
+        ach1 = new Achievement { Name = "Du har gennemført et scenarie !", isUnlocked = false };
+        ach2 = new Achievement { Name = "Du har gennemført to scenarier !", isUnlocked = false };
+        ach3 = new Achievement { Name = "Nysgerrig", isUnlocked = false };
+        ach4 = new Achievement { Name = "50% - Som Bon Jovi sagde \"Whoa, we're half way there. \" ", isUnlocked = false };
+        ach5 = new Achievement { Name = "100% - Det er sku imponerende !", isUnlocked = false };
+        ach6 = new Achievement { Name = "Du burde overvejer et job som livredder !", isUnlocked = false };
+        ach7 = new Achievement { Name = "Du svarede ikke forkert en eneste gang !", isUnlocked = false };
 
-        ach1 = achievements[0];
-        ach2 = achievements[1];
-        ach3 = achievements[2];
-        ach4 = achievements[3];
-        ach5 = achievements[4];
+        achievements.Add(ach1);
+        achievements.Add(ach2);
+        achievements.Add(ach3);
+        achievements.Add(ach4);
+        achievements.Add(ach5);
+        achievements.Add(ach6);
+        achievements.Add(ach7);
+
     }
 
     public static Scenario ScenarioWithMostStars(int scenarioNumber)
