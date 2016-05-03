@@ -8,7 +8,25 @@ public class LearnCPR : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+
+        if (!Data.ach6.isUnlocked)
+        {
+            if (SceneManager.GetActiveScene().name == "BasicCPR")
+            {
+                Data.LearnCPRVisited[0] = true;
+            }
+
+            if (SceneManager.GetActiveScene().name == "RecoveryPos")
+            {
+                Data.LearnCPRVisited[1] = true;
+            }
+
+            if (SceneManager.GetActiveScene().name == "AED")
+            {
+                Data.LearnCPRVisited[2] = true;
+            }
+        }
+
 	}
 
     public void BasicCPR()

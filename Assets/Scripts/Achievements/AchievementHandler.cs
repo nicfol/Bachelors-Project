@@ -60,7 +60,7 @@ public class AchievementHandler : MonoBehaviour {
         // Unlock Achievement 6 when user has visited all subcategories in the LearnCPR scene
         if (!Data.ach6.isUnlocked)
         {
-            if (Data.LearnCPRVisited[0] && Data.LearnCPRVisited[1] && Data.LearnCPRVisited[2] && Data.LearnCPRVisited[3])
+            if (Data.LearnCPRVisited[0] && Data.LearnCPRVisited[1] && Data.LearnCPRVisited[2])
             {
                 Data.ach6.isUnlocked = true;
                 achievementPopup.DisplayPopup(Data.ach6.Name);

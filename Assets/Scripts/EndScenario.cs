@@ -22,11 +22,12 @@ public class EndScenario : MonoBehaviour {
 
         if (!Data.ach7.isUnlocked)
         {
-            if (player.noWrongAnswer)
-            {
-                Data.ach7.isUnlocked = true;
-                GameObject.Find("Achievement Manager").GetComponent<AchievementPopup>().DisplayPopup(Data.ach7.name);
-            }
+            // ADD noWrongAnswer to PlayerController and then uncomment the below lines
+            //if (player.noWrongAnswer)
+            //{
+            //    Data.ach7.isUnlocked = true;
+            //    GameObject.Find("Achievement Manager").GetComponent<AchievementPopup>().DisplayPopup(Data.ach7.name);
+            //}
         }
 
     }

@@ -16,7 +16,7 @@ public class Data : MonoBehaviour {
     public static List<Achievement> achievements = new List<Achievement>();
 
     // Variables for achievements
-    public static bool[] LearnCPRVisited { get; set; }
+    public static bool[] LearnCPRVisited = new bool[3];
 
     public static Achievement ach1;
     public static Achievement ach2;
