@@ -111,11 +111,26 @@ public class PlayerController : MonoBehaviour {
     //Method to start the coroutine nextQuestion
     public void startNextQuestion() {
         Debug.Log(question);
-        StartCoroutine("nextQuestion");
+        
+        if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
+            question += 1;  //Adds one to the question so we can move on to the next question
+            Debug.Log("Question == NoofQuestion");
+        } else if (question == noOfQuestions + 1) {
+            endOfScenario = true;
+            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
+        } else if(question <= noOfQuestions) {
+            StartCoroutine("nextQuestion");
+        }
     }
 
+    
     IEnumerator nextQuestion() {
+        
+        //Disable wrong option box + children
         wrongBox.gameObject.SetActive(false);
+        for( int i = 0; i < wrongBox.transform.GetChild(0).transform.GetChild(0).transform.childCount; ++i ) {
+            wrongBox.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject.SetActiveRecursively(false);
+        }       
           
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
@@ -125,54 +140,47 @@ public class PlayerController : MonoBehaviour {
         //Disable and enable next setting text in the top
         if(question != 0) {
             settingText.transform.GetChild(question-1).gameObject.SetActive(false);
-            Debug.Log(settingText.transform.GetChild(question));
             settingText.transform.GetChild(question).gameObject.SetActive(true);
         }
-        
-        if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
-            endOfScenario = true;
-            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
-            Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
-        } else if(question <= noOfQuestions) {  //Run during any other question        
-            float t = 0.0f;
-            Vector3 startingPos = player.transform.position;    //Save the players starting position
-            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
-                          
-            while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
-                
-                t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
-                
-                if(t > 1) { //Set the correct answer box to disabled
-                    correctBox.gameObject.SetActive(false);
-                }
-                
-                if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
-                    player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
-                }
-                
-                /* SHIT ISN'T WORKING
-                if(playerRotations[question] != null && t > 0.95f) {
-                    Vector3 dir = playerRotations[question].position - player.transform.position;
-                    float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-                    Debug.Log(angle);
-                    player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
-                }
-                */
-                               
-                if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
-                    cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
-                    
-                    //Changes the cameras zoom if it's not null, not equals to the current zoom and not equals zero
-                    if(camZoom[question] != null && cam.orthographicSize != camZoom[question] && camZoom[question] != 0.0f) {
-                        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);   //Zooms the camera
-                    }                
-                }
-                yield return null;
+        float t = 0.0f;
+        Vector3 startingPos = player.transform.position;    //Save the players starting position
+        Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
+                        
+        while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
+            
+            t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
+            
+            if(t > 1) { //Set the correct answer box to disabled
+                correctBox.gameObject.SetActive(false);
             }
+            
+            if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
+                player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
+            }
+            
+            /* SHIT ISN'T WORKING
+            if(playerRotations[question] != null && t > 0.95f) {
+                Vector3 dir = playerRotations[question].position - player.transform.position;
+                float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+                Debug.Log(angle);
+                player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
+            }
+            */
+                            
+            if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
+                cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
+                
+                //Changes the cameras zoom if it's not null, not equals to the current zoom and not equals zero
+                if(camZoom[question] != null && cam.orthographicSize != camZoom[question] && camZoom[question] != 0.0f) {
+                    cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);   //Zooms the camera
+                }                
+            }
+            yield return null;
+        }
 
             questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
-            question += 1;  //Adds one to the question so we can move on to the next question
-        }
+            question ++;  //Adds one to the question so we can move on to the next question
+        
     }
         
 }
