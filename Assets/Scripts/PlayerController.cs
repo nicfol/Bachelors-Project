@@ -112,38 +112,40 @@ public class PlayerController : MonoBehaviour {
     public void startNextQuestion() {
         Debug.Log(question);
         
-        if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
+        if (question == noOfQuestions) {
             StartCoroutine("queAmbulance");
             Debug.Log("Question == NoofQuestion");
-        } else if (question == 10) {
-            StartCoroutine("returnAED");
+        } else if (question == 16) {
+            StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 2.0f));
         } else if (question == noOfQuestions + 1) {
             endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
         } else if(question <= noOfQuestions) {
             StartCoroutine("nextQuestion");
-            if(question == 7) {
-                StartCoroutine("getAED");
+            if (question == 2) {
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
+            } else if(question == 8) {
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
+            } else if(question == 9) {
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
             }
         }
     }
     
-    IEnumerator aedGetter() {
-        
-        yield return null;
+    IEnumerator moveObject(GameObject Obj2Move, GameObject targetObj, float timeScalar) {
+        GameObject moveObj = GameObject.Find(Obj2Move.name);
+        Vector3 startingPos = moveObj.transform.position;
+        Vector3 target = targetObj.transform.position; 
+                
+        float t = 0.0f;
+        while(t < 1.0f) {
+            t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
+            
+            moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
+            yield return null;
+        } 
     }
-    
-    IEnumerator getAED() {
         
-        yield return null;        
-    }
-    
-    IEnumerator returnAED() {
-        
-        StartCoroutine("nextQuestion");
-        yield return null;
-    }
-    
     IEnumerator queAmbulance() {
         
         question ++;  //Adds one to the question so we can move on to the next question
