@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine("queAmbulance");
             question++;
         } else if (question == noOfQuestions + 1) {
+            GameObject.Find("BackButton").gameObject.SetActive(false);
             endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
         } else if(question <= noOfQuestions) {
