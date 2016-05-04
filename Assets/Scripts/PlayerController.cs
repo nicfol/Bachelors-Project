@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour {
         // ------- HACK ------- //
         
         //Starts the scenario
-	    startNextQuestion();   
+	    startNextQuestion();
+        //StartCoroutine("queAmbulance");   
 	}
     
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour {
         
         if (question == noOfQuestions) {
             StartCoroutine("queAmbulance");
+            question++;
         } else if (question == noOfQuestions + 1) {
             endOfScenario = true;
             EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
@@ -173,8 +175,7 @@ public class PlayerController : MonoBehaviour {
         startNextQuestion();
         
         Debug.Log("queAmbulance done");
-        
-        question ++;  //Adds one to the question so we can move on to the next question
+
         yield return null;
     }
 
