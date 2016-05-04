@@ -36,17 +36,6 @@ public class AchievementHandler : MonoBehaviour {
                 Data.Progression += 7;
             }
         }
-
-        //if(Data.ScenarioWithMostStars(1).Stars == 1)
-        //{
-        //    Data.Progression += 7;
-        //} else if( Data.ScenarioWithMostStars(1).Stars == 2)
-        //{
-        //    Data.Progression += 14;
-        //} else if(Data.ScenarioWithMostStars(1).Stars == 3)
-        //{
-        //    Data.Progression += 21;
-        //}
     }
 	
 	// Update is called once per frame
