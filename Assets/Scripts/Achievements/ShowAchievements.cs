@@ -27,13 +27,13 @@ public class ShowAchievements : MonoBehaviour
             ach.transform.SetParent(gameObject.transform);
             if(i <= 5)
             {
-                pos = new Vector2(-220, 125 - achievementGap1);
-                achievementGap1 += 52;
+                pos = new Vector2(-210, 125 - achievementGap1);
+                achievementGap1 += 65;
             }
             else
             {
-                pos = new Vector2(220, 125 - achievementGap2);
-                achievementGap2 += 52;
+                pos = new Vector2(210, 125 - achievementGap2);
+                achievementGap2 += 65;
             }
             
             ach.GetComponent<RectTransform>().anchoredPosition = pos;
