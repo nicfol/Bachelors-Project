@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     private AchievementPopup achievementPopup;
 
     public GameObject correctBox;
+    public GameObject wrongBox;
     public GameObject EndSceneObject;
     public GameObject AnswerOptionsObject;
 
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     public Transform[] cameraTargets;
     public float[] camZoom;
     public Transform[] playerRotations;
+    
+    public GameObject settingText;
 
     public int scenarioNumber;
 
@@ -108,56 +111,106 @@ public class PlayerController : MonoBehaviour {
     //Method to start the coroutine nextQuestion
     public void startNextQuestion() {
         Debug.Log(question);
-        StartCoroutine("nextQuestion");
+        
+        if (question == noOfQuestions) {
+            StartCoroutine("queAmbulance");
+        } else if (question == noOfQuestions + 1) {
+            endOfScenario = true;
+            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
+        } else if(question <= noOfQuestions) {
+            StartCoroutine("nextQuestion");
+            if (question == 2) {
+                //Move him to his idle position
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
+            } else if(question == 8) {
+                //Get AED
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
+            } else if(question == 10) {
+                //Return with AED
+                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
+            }
+        }
+    }
+    
+    IEnumerator moveObject(GameObject Obj2Move, GameObject targetObj, float timeScalar) {
+        GameObject moveObj = GameObject.Find(Obj2Move.name);
+        Vector3 startingPos = moveObj.transform.position;
+        Vector3 target = targetObj.transform.position; 
+                
+        float t = 0.0f;
+        while(t < 1.0f) {
+            t += Time.deltaTime * (Time.timeScale/timeScalar);  //Progress in time
+            
+            moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
+            yield return null;
+        } 
+    }
+        
+    IEnumerator queAmbulance() {
+        yield return StartCoroutine(moveObject(GameObject.Find("AmbulanceAndEMT"), GameObject.Find("Ambulance Target 1"), 0.5f));
+        Debug.Log("queAmbulance done");
+        
+        question ++;  //Adds one to the question so we can move on to the next question
+        yield return null;
     }
 
-    IEnumerator nextQuestion() {  
+    
+    IEnumerator nextQuestion() {        
+        //Disable wrong option box + children
+        wrongBox.gameObject.SetActive(false);
+        for( int i = 0; i < wrongBox.transform.GetChild(0).transform.GetChild(0).transform.childCount; ++i ) {
+            wrongBox.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject.SetActiveRecursively(false);
+        }       
+          
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
         }
-        
-        if (question == noOfQuestions) {    //If the prior question was the last question --> Run this
-            endOfScenario = true;
-            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas
-            Debug.Log("W: " + wrongAnswers + " | C: " + correctAnswers);
-        } else if(question <= noOfQuestions) {  //Run during any other question        
-            float t = 0.0f;
-            Vector3 startingPos = player.transform.position;    //Save the players starting position
-            Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position  
-            while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
-                t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
-                
-                if(t > 1) { //Set the correct answer box to disabled
-                    correctBox.gameObject.SetActive(false);
-                }
-                
-                if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
-                    player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
-                }
-                
-                /* SHIT ISN'T WORKING
-                if(playerRotations[question] != null && t > 0.95f) {
-                    Vector3 dir = playerRotations[question].position - player.transform.position;
-                    float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-                    Debug.Log(angle);
-                    player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
-                }
-                */
-                               
-                if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
-                    cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
                     
-                    //Changes the cameras zoom if it's not null, not equals to the current zoom and not equals zero
-                    if(camZoom[question] != null && cam.orthographicSize != camZoom[question] && camZoom[question] != 0.0f) {
-                        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);   //Zooms the camera
-                    }                
-                }
-                yield return null;
-            }
-            questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
-            question += 1;  //Adds one to the question so we can move on to the next question
+        //Disable and enable next setting text in the top
+        if(question != 0) {
+            settingText.transform.GetChild(question-1).gameObject.SetActive(false);
+            settingText.transform.GetChild(question).gameObject.SetActive(true);
         }
+        float t = 0.0f;
+        Vector3 startingPos = player.transform.position;    //Save the players starting position
+        Vector3 camStartingPos = cam.transform.position;    //Save the cameras starting position
+                        
+        while (t < 1.0f && cam.transform.position != cameraTargets[question].position) {
+            
+            t += Time.deltaTime * (Time.timeScale/transitionDuration);  //Progress in time
+            
+            if(t > 1) { //Set the correct answer box to disabled
+                correctBox.gameObject.SetActive(false);
+            }
+            
+            if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
+                player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
+            }
+            
+            /* SHIT ISN'T WORKING
+            if(playerRotations[question] != null && t > 0.95f) {
+                Vector3 dir = playerRotations[question].position - player.transform.position;
+                float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+                Debug.Log(angle);
+                player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
+            }
+            */
+                            
+            if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
+                cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
+                
+                //Changes the cameras zoom if it's not null, not equals to the current zoom and not equals zero
+                if(camZoom[question] != null && cam.orthographicSize != camZoom[question] && camZoom[question] != 0.0f) {
+                    cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camZoom[question], t/20);   //Zooms the camera
+                }                
+            }
+            yield return null;
+        }
+
+        questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
+        question ++;  //Adds one to the question so we can move on to the next question
+        
     }
         
 }
