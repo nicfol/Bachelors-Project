@@ -120,10 +120,13 @@ public class PlayerController : MonoBehaviour {
         } else if(question <= noOfQuestions) {
             StartCoroutine("nextQuestion");
             if (question == 2) {
+                //Move him to his idle position
                 StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
             } else if(question == 8) {
+                //Get AED
                 StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
-            } else if(question == 9) {
+            } else if(question == 10) {
+                //Return with AED
                 StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
             }
         }
@@ -136,7 +139,7 @@ public class PlayerController : MonoBehaviour {
                 
         float t = 0.0f;
         while(t < 1.0f) {
-            t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
+            t += Time.deltaTime * (Time.timeScale/timeScalar);  //Progress in time
             
             moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
             yield return null;
@@ -144,7 +147,8 @@ public class PlayerController : MonoBehaviour {
     }
         
     IEnumerator queAmbulance() {
-        yield return StartCoroutine(moveObject(GameObject.Find("Ambulance"), GameObject.Find("Ambulance Target 1"), 0.5f));
+        yield return StartCoroutine(moveObject(GameObject.Find("AmbulanceAndEMT"), GameObject.Find("Ambulance Target 1"), 0.5f));
+        Debug.Log("queAmbulance done");
         
         question ++;  //Adds one to the question so we can move on to the next question
         yield return null;
