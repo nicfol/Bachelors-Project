@@ -28,11 +28,22 @@ public class AchievementHandler : MonoBehaviour {
             playerControllerFound = true;
         }
 
-        for(int i = 0; i < Data.scenario1ProgStars.Length; i++)
+
+        // Add progression to depending on stars earned in Scenario 1
+        if (Data.ScenarioWithMostStars(1).Stars > 0)
         {
-            if(Data.ScenarioWithMostStars(1).Stars == i + 1 && !Data.scenario1ProgStars[i])
+            if (Data.ScenarioWithMostStars(1).Stars >= 1 && !Data.scenario1ProgStars[0])
             {
-                Data.scenario1ProgStars[i] = true;
+                Data.Progression += 7;
+            }
+
+            if (Data.ScenarioWithMostStars(1).Stars >= 2 && !Data.scenario1ProgStars[1])
+            {
+                Data.Progression += 7;
+            }
+
+            if (Data.ScenarioWithMostStars(1).Stars >= 3 && !Data.scenario1ProgStars[2])
+            {
                 Data.Progression += 7;
             }
         }
