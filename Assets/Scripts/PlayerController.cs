@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour {
         // ------- HACK ------- //
         
         //Starts the scenario
-	    startNextQuestion();
+	    startNextQuestion();   
 	}
     
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
                 
         float t = 0.0f;
         while(t < 1.0f) {
-            t += Time.deltaTime * (Time.timeScale/timeScalar);  //Progress in time
+            t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
             
             moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
             yield return null;
@@ -147,7 +147,31 @@ public class PlayerController : MonoBehaviour {
     }
         
     IEnumerator queAmbulance() {
-        yield return StartCoroutine(moveObject(GameObject.Find("AmbulanceAndEMT"), GameObject.Find("Ambulance Target 1"), 0.5f));
+        
+        //THIS IS DISGUSTING
+        
+        GameObject ambulance = GameObject.Find("Ambulance");
+        GameObject EMTS = GameObject.Find("EMTS");
+        GameObject deadPerson = GameObject.Find("Dead Person");
+        
+        GameObject AmbTar1 = GameObject.Find("Ambulance Target 1");
+        GameObject AmbTar2 = GameObject.Find("Ambulance Target 2");
+        
+        GameObject emtTar2 = GameObject.Find("EMT Target 2");
+        
+        StartCoroutine(moveObject(ambulance, AmbTar1, 1.0f));
+        yield return StartCoroutine(moveObject(EMTS, AmbTar1, 1.0f));
+        yield return StartCoroutine(moveObject(EMTS, GameObject.Find("EMT Target 1"), 0.25f));
+        
+        StartCoroutine(moveObject(EMTS, emtTar2, 0.25f));
+        yield return StartCoroutine(moveObject(deadPerson, emtTar2, 0.25f));
+        
+        StartCoroutine(moveObject(ambulance, AmbTar2, 0.25f));
+        StartCoroutine(moveObject(deadPerson, AmbTar2, 0.25f));
+        yield return StartCoroutine(moveObject(EMTS, AmbTar2, 0.25f));
+        
+        startNextQuestion();
+        
         Debug.Log("queAmbulance done");
         
         question ++;  //Adds one to the question so we can move on to the next question
