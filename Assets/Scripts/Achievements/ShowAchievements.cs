@@ -5,25 +5,38 @@ using UnityEngine.UI;
 public class ShowAchievements : MonoBehaviour
 {
 
-    int achievementGap;
+    int achievementGap1;
+    int achievementGap2;
 
     Text achievementText;
     GameObject checkmark;
 
     bool showAchievements;
 
+    Vector2 pos;
     // Use this for initialization
     void Start()
     {
-        achievementGap = 0;
+        achievementGap1 = 0;
+        achievementGap2 = 0;
+
 
         for (int i = 0; i < Data.achievements.Count; i++)
         {
             GameObject ach = Instantiate(Resources.Load("Achievement")) as GameObject;
             ach.transform.SetParent(gameObject.transform);
-            Vector2 pos = new Vector2(1, 125 - achievementGap);
+            if(i <= 5)
+            {
+                pos = new Vector2(-210, 125 - achievementGap1);
+                achievementGap1 += 65;
+            }
+            else
+            {
+                pos = new Vector2(210, 125 - achievementGap2);
+                achievementGap2 += 65;
+            }
+            
             ach.GetComponent<RectTransform>().anchoredPosition = pos;
-            achievementGap += 52;
 
             achievementText = ach.transform.GetChild(1).GetComponent<Text>();
             achievementText.text = Data.achievements[i].Name;

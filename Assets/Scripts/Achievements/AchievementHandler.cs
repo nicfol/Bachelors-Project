@@ -27,6 +27,15 @@ public class AchievementHandler : MonoBehaviour {
             playerController = GameObject.Find("Scenario Handler").GetComponent<PlayerController>();
             playerControllerFound = true;
         }
+
+        for(int i = 0; i < Data.scenario1ProgStars.Length; i++)
+        {
+            if(Data.ScenarioWithMostStars(1).Stars == i + 1 && !Data.scenario1ProgStars[i])
+            {
+                Data.scenario1ProgStars[i] = true;
+                Data.Progression += 7;
+            }
+        }
     }
 	
 	// Update is called once per frame
