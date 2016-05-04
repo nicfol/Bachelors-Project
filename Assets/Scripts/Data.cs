@@ -18,6 +18,11 @@ public class Data : MonoBehaviour {
     // Variables for achievements
     public static bool[] LearnCPRVisited = new bool[3];
 
+    public static bool s1ProgStar1, s1ProgStar2, s1ProgStar3;
+    public static bool s2ProgStar1, s2ProgStar2, s2ProgStar3;
+
+    public static bool[] scenario1ProgStars;
+
     public static Achievement ach1;
     public static Achievement ach2;
     public static Achievement ach3;
@@ -49,6 +54,12 @@ public class Data : MonoBehaviour {
         achievements.Add(ach7);
         achievements.Add(ach8);
         achievements.Add(ach9);
+
+        scenario1ProgStars = new bool[3];
+        for(int i= 0; i < scenario1ProgStars.Length; i++)
+        {
+            scenario1ProgStars[i] = false;
+        }
     }
 
     public static Scenario ScenarioWithMostStars(int scenarioNumber)
