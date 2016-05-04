@@ -14,6 +14,16 @@ public class PlayerController : MonoBehaviour {
     public GameObject EndSceneObject;
     public GameObject AnswerOptionsObject;
 
+    Quaternion startRotation;
+    Quaternion rot;
+
+    public float lerpTime = 1f;
+    float currentLerpTime;
+
+    private bool rotatePlayer = false;
+    private bool hasRotatedOnce = false;
+    private bool getAEDRotation = false;
+
     private int question = 0;
     private int noOfQuestions;
     
@@ -55,6 +65,11 @@ public class PlayerController : MonoBehaviour {
         endOfScenario = false;
         noWrongAnswer = true;
 
+        currentLerpTime = 0;
+       
+        rot = Quaternion.Euler(0, 0, 95);
+        startRotation = player.transform.rotation;
+
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
         Data.scenario_1.Add(newScenario);
         currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
@@ -84,6 +99,36 @@ public class PlayerController : MonoBehaviour {
 	    startNextQuestion();
         //StartCoroutine("queAmbulance");   
 	}
+
+    void Update()
+    {
+        if (rotatePlayer)
+        {
+            currentLerpTime += Time.deltaTime;
+
+            if (currentLerpTime > lerpTime)
+           {
+                currentLerpTime = lerpTime;
+                //rotatePlayer = false;  This will make the player turn back to his starting rotation.....
+            }
+            float perc = currentLerpTime / lerpTime;
+            player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(startRotation, rot, perc);
+            // gameObject.GetComponent<RectTransform>().rotation = rot;
+            
+        }
+
+        //if (getAEDRotation)
+        //{
+        //    currentLerpTime += Time.deltaTime;
+
+        //    if (currentLerpTime > lerpTime)
+        //    {
+        //        getAEDRotation = false;
+        //        currentLerpTime = 0;
+        //    }
+            //GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation
+        //}
+    }
     
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
@@ -128,6 +173,8 @@ public class PlayerController : MonoBehaviour {
             } else if(question == 8) {
                 //Get AED
                 StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
+                getAEDRotation = true;
+
             } else if(question == 10) {
                 //Return with AED
                 StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
@@ -233,6 +280,8 @@ public class PlayerController : MonoBehaviour {
             }
             yield return null;
         }
+
+        rotatePlayer = true;
 
         questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
         question ++;  //Adds one to the question so we can move on to the next question
