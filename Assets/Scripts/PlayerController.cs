@@ -79,9 +79,12 @@ public class PlayerController : MonoBehaviour {
         aedBackRotation = Quaternion.Euler(0, 0, 40);
 
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
-        Data.scenario_1.Add(newScenario);
-        currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
-
+        if (scenarioNumber == 1) {
+            Data.scenario_1.Add(newScenario);
+            currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
+        } else if (scenarioNumber == 2) {
+            
+        }
         achievementPopup = achievementManager.GetComponent<AchievementPopup>();
 
         getNumberOfQuestions();
@@ -170,6 +173,8 @@ public class PlayerController : MonoBehaviour {
         Debug.Log(question);
         
         if(scenarioNumber == 1) {
+            //Scenario 1 code here
+            
             if (question == noOfQuestions) {
                 StartCoroutine("queAmbulance");
                 question++;
@@ -201,7 +206,19 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         } else if (scenarioNumber == 2) {
-            //Scenario 2 code here
+            //Scenario 2 code here            
+            if (question == noOfQuestions) { 
+                GameObject.Find("BackButton").gameObject.SetActive(false);
+                GameObject.Find("Scenario Text").gameObject.SetActive(false);
+                
+                endOfScenario = true;
+                EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas  
+            } else if(question <= noOfQuestions) {
+                StartCoroutine("nextQuestion");
+                if (question == 0) {
+                    
+                }
+            } 
         }
     }
     
