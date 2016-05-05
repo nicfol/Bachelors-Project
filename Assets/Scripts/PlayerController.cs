@@ -177,6 +177,7 @@ public class PlayerController : MonoBehaviour {
                 question++;
             } else if (question == noOfQuestions + 1) {
                 GameObject.Find("BackButton").gameObject.SetActive(false);
+                GameObject.Find("Scenario Text").gameObject.SetActive(false);
                 endOfScenario = true;
                 EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
             } else if(question <= noOfQuestions) {
@@ -211,7 +212,6 @@ public class PlayerController : MonoBehaviour {
         float t = 0.0f;
         while(t < 1.0f) {
             t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
-            Debug.Log(t);
             moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
             yield return null;
         } 
@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour {
         //Change camera movement speed after intro scene
         if(question == 1.0f) {
             transitionDuration = 1.0f;
+            GameObject.Find("Scenario Text").gameObject.SetActive(true);
         }
                     
         //Disable and enable next setting text in the top
