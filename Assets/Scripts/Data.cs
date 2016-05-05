@@ -36,15 +36,15 @@ public class Data : MonoBehaviour {
 
     public static void InitializeAchievements()
     {
-        ach1 = new Achievement { Name = "Du har gennemført et scenarie !", isUnlocked = false };
-        ach2 = new Achievement { Name = "Du har gennemført to scenarier !", isUnlocked = false };
+        ach1 = new Achievement { Name = "Du har gennemført et scenarie!", isUnlocked = false };
+        ach2 = new Achievement { Name = "Du har gennemført to scenarier!", isUnlocked = false };
         ach3 = new Achievement { Name = "Nysgerrig", isUnlocked = false };
         ach4 = new Achievement { Name = "50% - Som Bon Jovi sagde \"Whoa, we're half way there. \" ", isUnlocked = false };
-        ach5 = new Achievement { Name = "100% - Det er sku imponerende !", isUnlocked = false };
-        ach6 = new Achievement { Name = "Du burde overvejer et job som livredder !", isUnlocked = false };
-        ach7 = new Achievement { Name = "Du svarede ikke forkert en eneste gang !", isUnlocked = false };
-        ach8 = new Achievement { Name = "3 rigtige i træk !", isUnlocked = false };
-        ach9 = new Achievement { Name = "6 rigtige i træk !", isUnlocked = false };
+        ach5 = new Achievement { Name = "100% - Det er sku imponerende!", isUnlocked = false };
+        ach6 = new Achievement { Name = "Du burde overveje et job som livredder!", isUnlocked = false };
+        ach7 = new Achievement { Name = "Du svarede ikke forkert en eneste gang!", isUnlocked = false };
+        ach8 = new Achievement { Name = "3 rigtige i træk!", isUnlocked = false };
+        ach9 = new Achievement { Name = "6 rigtige i træk!", isUnlocked = false };
 
         achievements.Add(ach1);
         achievements.Add(ach2);
