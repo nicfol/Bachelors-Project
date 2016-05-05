@@ -164,10 +164,10 @@ public class PlayerController : MonoBehaviour {
     
     //Add one to correctAnswers
     public void addToCorrectAnswer() {
-        /*currentScenario.correctAnswers++;
+        currentScenario.correctAnswers++;
         currentScenario.totalAnswers++;
         correctAnswerStreak++;
-        */Debug.Log("Added one to correctAnswers");
+        Debug.Log("Added one to correctAnswers");
     }
     
     //Method to start the coroutine nextQuestion
