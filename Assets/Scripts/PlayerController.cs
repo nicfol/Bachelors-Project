@@ -72,9 +72,9 @@ public class PlayerController : MonoBehaviour {
        
         rot = Quaternion.Euler(0, 0, 105);
         playerStartRotation = player.transform.rotation;
-        aedStartRotation = Quaternion.Euler(0, 0, 180);
+        aedStartRotation = Quaternion.Euler(0, 0, 220);
 
-        aedBackRotation = Quaternion.Euler(0, 0, 0);
+        aedBackRotation = Quaternion.Euler(0, 0, 40);
 
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
         Data.scenario_1.Add(newScenario);
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour {
         float t = 0.0f;
         while(t < 1.0f) {
             t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
-            
+            Debug.Log(t);
             moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
             yield return null;
         } 
