@@ -7,17 +7,16 @@ public class IncrementProgression : MonoBehaviour {
 
     string sceneName;
     bool hasBeenVisited;
-    int incrementValue;
+    private float incrementValue;
     
     void Start()
     {
-        incrementValue = 4;
+        incrementValue = 6f;
         sceneName = SceneManager.GetActiveScene().name;
-        
         if (!Data.Scenes.Any(str => str.Contains(sceneName)))
         {
-            Data.Scenes.Add(sceneName);
             Data.Progression += incrementValue;
+            Data.Scenes.Add(sceneName);
         }
     }
 
