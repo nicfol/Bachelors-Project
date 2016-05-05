@@ -7,7 +7,7 @@ public class Data : MonoBehaviour {
     public static string ParticipantsName { get; set; }
     public static float InitialSceneTime { get; set; }
     public static float TotalTime { get; set; }
-    public static int Progression { get; set; }
+    public static float Progression { get; set; }
     public static List<string> Scenes = new List<string>();
 
     public static List<Scenario> scenario_1 = new List<Scenario>();
@@ -22,6 +22,7 @@ public class Data : MonoBehaviour {
     public static bool s2ProgStar1, s2ProgStar2, s2ProgStar3;
 
     public static bool[] scenario1ProgStars;
+    public static bool[] scenario2ProgStars;
 
     public static Achievement ach1;
     public static Achievement ach2;
@@ -56,9 +57,11 @@ public class Data : MonoBehaviour {
         achievements.Add(ach9);
 
         scenario1ProgStars = new bool[3];
-        for(int i= 0; i < scenario1ProgStars.Length; i++)
+        scenario2ProgStars = new bool[3];
+        for(int i= 0; i < 3; i++)
         {
             scenario1ProgStars[i] = false;
+            scenario2ProgStars[i] = false;
         }
     }
 
