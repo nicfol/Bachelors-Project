@@ -27,26 +27,6 @@ public class AchievementHandler : MonoBehaviour {
             playerController = GameObject.Find("Scenario Handler").GetComponent<PlayerController>();
             playerControllerFound = true;
         }
-
-
-        // Add progression to depending on stars earned in Scenario 1
-        if (Data.ScenarioWithMostStars(1).Stars > 0)
-        {
-            if (Data.ScenarioWithMostStars(1).Stars >= 1 && !Data.scenario1ProgStars[0])
-            {
-                Data.Progression += 7;
-            }
-
-            if (Data.ScenarioWithMostStars(1).Stars >= 2 && !Data.scenario1ProgStars[1])
-            {
-                Data.Progression += 7;
-            }
-
-            if (Data.ScenarioWithMostStars(1).Stars >= 3 && !Data.scenario1ProgStars[2])
-            {
-                Data.Progression += 7;
-            }
-        }
     }
 	
 	// Update is called once per frame

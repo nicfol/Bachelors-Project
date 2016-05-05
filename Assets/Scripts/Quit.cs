@@ -27,13 +27,13 @@ public class Quit : MonoBehaviour {
         {
             string[] createText = new String[1];
 
-            createText[0] = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Data.Progression.ToString();
+            createText[0] = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString();
 
             File.WriteAllLines(path, createText);
         }
         else
         {
-            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Data.Progression.ToString();
+            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString();
             File.AppendAllText(path, appendText);
         }
 

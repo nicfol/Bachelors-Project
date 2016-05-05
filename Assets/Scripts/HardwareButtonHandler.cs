@@ -13,7 +13,7 @@ public class HardwareButtonHandler : MonoBehaviour {
 	    PlayerPrefs.SetString("PrevScene", previousScene);
         
         currentScene = SceneManager.GetActiveScene().name;
-        Debug.Log(currentScene);
+        //Debug.Log(currentScene);
         PlayerPrefs.SetString("CurrentScene", currentScene);
 	}
 	
