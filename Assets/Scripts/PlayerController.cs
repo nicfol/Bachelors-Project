@@ -158,27 +158,31 @@ public class PlayerController : MonoBehaviour {
     public void startNextQuestion() {
         Debug.Log(question);
         
-        if (question == noOfQuestions) {
-            StartCoroutine("queAmbulance");
-            question++;
-        } else if (question == noOfQuestions + 1) {
-            GameObject.Find("BackButton").gameObject.SetActive(false);
-            endOfScenario = true;
-            EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
-        } else if(question <= noOfQuestions) {
-            StartCoroutine("nextQuestion");
-            if (question == 2) {
-                //Move him to his idle position
-                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
-            } else if(question == 8) {
-                //Get AED
-                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
-                getAEDRotation = true;
+        if(scenarioNumber == 1) {
+            if (question == noOfQuestions) {
+                StartCoroutine("queAmbulance");
+                question++;
+            } else if (question == noOfQuestions + 1) {
+                GameObject.Find("BackButton").gameObject.SetActive(false);
+                endOfScenario = true;
+                EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
+            } else if(question <= noOfQuestions) {
+                StartCoroutine("nextQuestion");
+                if (question == 2) {
+                    //Move him to his idle position
+                    StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
+                } else if(question == 8) {
+                    //Get AED
+                    StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 2"), 1.0f));
+                    getAEDRotation = true;
 
-            } else if(question == 10) {
-                //Return with AED
-                StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
+                } else if(question == 10) {
+                    //Return with AED
+                    StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
+                }
             }
+        } else if (scenarioNumber == 2) {
+            //Scenario 2 code here
         }
     }
     
