@@ -14,15 +14,18 @@ public class PlayerController : MonoBehaviour {
     public GameObject EndSceneObject;
     public GameObject AnswerOptionsObject;
 
-    Quaternion startRotation;
+    Quaternion playerStartRotation;
     Quaternion rot;
+    Quaternion aedBackRotation;
 
     public float lerpTime = 1f;
+    public float aedLerpTime = 0.4f;
     float currentLerpTime;
 
     private bool rotatePlayer = false;
     private bool hasRotatedOnce = false;
     private bool getAEDRotation = false;
+    private Quaternion aedStartRotation;
 
     private int question = 0;
     private int noOfQuestions;
@@ -67,8 +70,11 @@ public class PlayerController : MonoBehaviour {
 
         currentLerpTime = 0;
        
-        rot = Quaternion.Euler(0, 0, 95);
-        startRotation = player.transform.rotation;
+        rot = Quaternion.Euler(0, 0, 105);
+        playerStartRotation = player.transform.rotation;
+        aedStartRotation = Quaternion.Euler(0, 0, 180);
+
+        aedBackRotation = Quaternion.Euler(0, 0, 0);
 
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
         Data.scenario_1.Add(newScenario);
@@ -108,28 +114,35 @@ public class PlayerController : MonoBehaviour {
 
             if (currentLerpTime > lerpTime)
            {
-                currentLerpTime = lerpTime;
-                //rotatePlayer = false;  This will make the player turn back to his starting rotation.....
+                //currentLerpTime = lerpTime;
+                playerStartRotation = rot;
+                currentLerpTime = 0;
+                rotatePlayer = false;  //This will make the player turn back to his starting rotation.....
             }
             float perc = currentLerpTime / lerpTime;
-            player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(startRotation, rot, perc);
+            player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(playerStartRotation, rot, perc);
             // gameObject.GetComponent<RectTransform>().rotation = rot;
             
         }
 
-        //if (getAEDRotation)
-        //{
-        //    currentLerpTime += Time.deltaTime;
+        if (getAEDRotation)
+        {
+            currentLerpTime += Time.deltaTime;
 
-        //    if (currentLerpTime > lerpTime)
-        //    {
-        //        getAEDRotation = false;
-        //        currentLerpTime = 0;
-        //    }
-            //GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation
-        //}
+            if (currentLerpTime > lerpTime)
+            {
+                //aedStartRotation = aedBackRotation;
+                currentLerpTime = 0;
+                getAEDRotation = false;
+            }
+            float perc = currentLerpTime / aedLerpTime;
+            GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = Quaternion.Lerp(aedStartRotation, aedBackRotation, perc);
+        } else
+        {
+            GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = aedStartRotation;
+        }
     }
-    
+
     //Finds the number of questions based on the number of child gameobjects from "QuestionBoxes(Canvas)"
     public void getNumberOfQuestions() {
         //noOfQuestions = GameObject.Find("Answer Options").transform.childCount;
@@ -169,6 +182,9 @@ public class PlayerController : MonoBehaviour {
             } else if(question <= noOfQuestions) {
                 StartCoroutine("nextQuestion");
                 if (question == 2) {
+                    //Rotate player
+                    rotatePlayer = true;
+
                     //Move him to his idle position
                     StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 1"), 4.0f));
                 } else if(question == 8) {
@@ -178,6 +194,7 @@ public class PlayerController : MonoBehaviour {
 
                 } else if(question == 10) {
                     //Return with AED
+                    getAEDRotation = false;
                     StartCoroutine(moveObject(GameObject.Find("AEDPerson"), GameObject.Find("AEDPerson Target 3"), 1.0f));                
                 }
             }
@@ -213,16 +230,17 @@ public class PlayerController : MonoBehaviour {
         
         GameObject emtTar2 = GameObject.Find("EMT Target 2");
         
-        StartCoroutine(moveObject(ambulance, AmbTar1, 1.0f));
-        yield return StartCoroutine(moveObject(EMTS, AmbTar1, 1.0f));
-        yield return StartCoroutine(moveObject(EMTS, GameObject.Find("EMT Target 1"), 0.25f));
+        StartCoroutine(moveObject(ambulance, AmbTar1, 2.0f));
+        ambulance.GetComponent<AudioSource>().PlayDelayed(1.7f);
+        yield return StartCoroutine(moveObject(EMTS, AmbTar1, 2.0f));
+        yield return StartCoroutine(moveObject(EMTS, GameObject.Find("EMT Target 1"), 1f));
         
-        StartCoroutine(moveObject(EMTS, emtTar2, 0.25f));
-        yield return StartCoroutine(moveObject(deadPerson, emtTar2, 0.25f));
+        StartCoroutine(moveObject(EMTS, emtTar2, 1f));
+        yield return StartCoroutine(moveObject(deadPerson, emtTar2, 1f));
         
-        StartCoroutine(moveObject(ambulance, AmbTar2, 0.25f));
-        StartCoroutine(moveObject(deadPerson, AmbTar2, 0.25f));
-        yield return StartCoroutine(moveObject(EMTS, AmbTar2, 0.25f));
+        StartCoroutine(moveObject(ambulance, AmbTar2, 2f));
+        StartCoroutine(moveObject(deadPerson, AmbTar2, 2f));
+        yield return StartCoroutine(moveObject(EMTS, AmbTar2, 2f));
         
         startNextQuestion();
         
@@ -284,8 +302,6 @@ public class PlayerController : MonoBehaviour {
             }
             yield return null;
         }
-
-        rotatePlayer = true;
 
         questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
         question ++;  //Adds one to the question so we can move on to the next question
