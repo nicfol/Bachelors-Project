@@ -27,11 +27,13 @@ public class PlayerController : MonoBehaviour {
     private bool getAEDRotation = false;
     private Quaternion aedStartRotation;
 
-    public int question = 0;
+    private int question = 0;
     private int noOfQuestions;
     
     private int correctAnswers = 0;
     private int wrongAnswers = 0;
+    
+    private GameObject scenarioTextBox;
     
     public GameObject[] questionObjects;
     
@@ -84,6 +86,9 @@ public class PlayerController : MonoBehaviour {
 
         getNumberOfQuestions();
         
+        scenarioTextBox = GameObject.Find("Scenario Text");
+        scenarioTextBox.gameObject.SetActive(false);
+        
         //Automatically set camera and player if they aren't       
         if(cam == null) {
             cam = Camera.main;
@@ -103,17 +108,14 @@ public class PlayerController : MonoBehaviour {
         
         //Starts the scenario
 	    startNextQuestion();
-        //StartCoroutine("queAmbulance");   
 	}
 
     void Update()
     {
-        if (rotatePlayer)
-        {
+        if (rotatePlayer) {
             currentLerpTime += Time.deltaTime;
 
-            if (currentLerpTime > lerpTime)
-           {
+            if (currentLerpTime > lerpTime) {
                 //currentLerpTime = lerpTime;
                 playerStartRotation = rot;
                 currentLerpTime = 0;
@@ -122,23 +124,19 @@ public class PlayerController : MonoBehaviour {
             float perc = currentLerpTime / lerpTime;
             player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(playerStartRotation, rot, perc);
             // gameObject.GetComponent<RectTransform>().rotation = rot;
-            
         }
 
-        if (getAEDRotation)
-        {
+        if (getAEDRotation) {
             currentLerpTime += Time.deltaTime;
 
-            if (currentLerpTime > lerpTime)
-            {
+            if (currentLerpTime > lerpTime) {
                 //aedStartRotation = aedBackRotation;
                 currentLerpTime = 0;
                 getAEDRotation = false;
             }
             float perc = currentLerpTime / aedLerpTime;
             GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = Quaternion.Lerp(aedStartRotation, aedBackRotation, perc);
-        } else
-        {
+        } else {
             GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = aedStartRotation;
         }
     }
@@ -178,11 +176,14 @@ public class PlayerController : MonoBehaviour {
             } else if (question == noOfQuestions + 1) {
                 GameObject.Find("BackButton").gameObject.SetActive(false);
                 GameObject.Find("Scenario Text").gameObject.SetActive(false);
+                
                 endOfScenario = true;
                 EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
             } else if(question <= noOfQuestions) {
                 StartCoroutine("nextQuestion");
-                if (question == 2) {
+                if (question == 0) {
+                
+                } else if (question == 2) {
                     //Rotate player
                     rotatePlayer = true;
 
@@ -212,7 +213,6 @@ public class PlayerController : MonoBehaviour {
         float t = 0.0f;
         while(t < 1.0f) {
             t += Time.deltaTime * (Time.timeScale/transitionDuration/timeScalar);  //Progress in time
-            Debug.Log(t);
             moveObj.transform.position = Vector3.Lerp(startingPos, target, t);
             yield return null;
         } 
@@ -283,15 +283,6 @@ public class PlayerController : MonoBehaviour {
             if(playerTargets[question] != null) {   //Moves the player to the next target, if it's not null
                 player.transform.position = Vector3.Lerp(startingPos, playerTargets[question].position, t);
             }
-            
-            /* SHIT ISN'T WORKING
-            if(playerRotations[question] != null && t > 0.95f) {
-                Vector3 dir = playerRotations[question].position - player.transform.position;
-                float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-                Debug.Log(angle);
-                player.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);                           
-            }
-            */
                             
             if(cameraTargets[question] != null) {   //Moves the camera to the next target, if it's not null
                 cam.transform.position = Vector3.Lerp(camStartingPos, cameraTargets[question].position, t);
@@ -303,7 +294,11 @@ public class PlayerController : MonoBehaviour {
             }
             yield return null;
         }
-
+        
+        if(question == 0) {
+            scenarioTextBox.gameObject.SetActive(true);
+        }
+        
         questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
         question ++;  //Adds one to the question so we can move on to the next question
         
