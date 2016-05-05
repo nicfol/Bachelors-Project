@@ -21,9 +21,9 @@ public class Quit : MonoBehaviour {
 
         Debug.Log("Total time: " + Data.TotalTime);
 
-        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
-        //string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
-        if (File.Exists(path))
+        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+        string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        if (!File.Exists(path))
         {
             string[] createText = new String[1];
 
