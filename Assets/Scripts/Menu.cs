@@ -41,6 +41,11 @@ public class Menu : MonoBehaviour {
         SceneManager.LoadScene("Scenario 1");
     }
     
+    public void GoToScenario2()
+    {
+        SceneManager.LoadScene("Scenario 2");
+    }
+    
     public void ExitGame()
     {
         Application.Quit();
@@ -59,4 +64,6 @@ public class Menu : MonoBehaviour {
     {
         SceneManager.LoadScene("RecoveryPos");
     }
+    
+    
 }
