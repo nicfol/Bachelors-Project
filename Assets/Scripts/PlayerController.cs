@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     private bool getAEDRotation = false;
     private Quaternion aedStartRotation;
 
-    private int question = 0;
+    public int question = 0;
     private int noOfQuestions;
     
     private int correctAnswers = 0;
@@ -177,6 +177,7 @@ public class PlayerController : MonoBehaviour {
                 question++;
             } else if (question == noOfQuestions + 1) {
                 GameObject.Find("BackButton").gameObject.SetActive(false);
+                GameObject.Find("Scenario Text").gameObject.SetActive(false);
                 endOfScenario = true;
                 EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
             } else if(question <= noOfQuestions) {
