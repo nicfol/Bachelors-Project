@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour {
         // NEEDS TO CHECK WHICH SCENARIO WE ARE IN BEBORE ADDING TO A LIST !!!
         Data.scenario_1.Add(newScenario);
         currentScenario = Data.scenario_1[Data.scenario_1.Count - 1];
-
+        
         achievementPopup = achievementManager.GetComponent<AchievementPopup>();
 
         getNumberOfQuestions();
@@ -110,34 +110,39 @@ public class PlayerController : MonoBehaviour {
 	    startNextQuestion();
 	}
 
-    void Update()
-    {
-        if (rotatePlayer) {
-            currentLerpTime += Time.deltaTime;
+    void Update() {
+        if(scenarioNumber == 1) {
+            if (rotatePlayer) {
+                currentLerpTime += Time.deltaTime;
 
-            if (currentLerpTime > lerpTime) {
-                //currentLerpTime = lerpTime;
-                playerStartRotation = rot;
-                currentLerpTime = 0;
-                rotatePlayer = false;  //This will make the player turn back to his starting rotation.....
+                if (currentLerpTime > lerpTime) {
+                    //currentLerpTime = lerpTime;
+                    playerStartRotation = rot;
+                    currentLerpTime = 0;
+                    rotatePlayer = false;  //This will make the player turn back to his starting rotation.....
+                }
+                float perc = currentLerpTime / lerpTime;
+                player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(playerStartRotation, rot, perc);
+                // gameObject.GetComponent<RectTransform>().rotation = rot;
             }
-            float perc = currentLerpTime / lerpTime;
-            player.GetComponent<RectTransform>().rotation = Quaternion.Lerp(playerStartRotation, rot, perc);
-            // gameObject.GetComponent<RectTransform>().rotation = rot;
-        }
 
-        if (getAEDRotation) {
-            currentLerpTime += Time.deltaTime;
+            if (getAEDRotation) {
+                currentLerpTime += Time.deltaTime;
 
-            if (currentLerpTime > lerpTime) {
-                //aedStartRotation = aedBackRotation;
-                currentLerpTime = 0;
-                getAEDRotation = false;
+                if (currentLerpTime > lerpTime) {
+                    //aedStartRotation = aedBackRotation;
+                    currentLerpTime = 0;
+                    getAEDRotation = false;
+                }
+                float perc = currentLerpTime / aedLerpTime;
+                GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = Quaternion.Lerp(aedStartRotation, aedBackRotation, perc);
+            } else {
+                GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = aedStartRotation;
             }
-            float perc = currentLerpTime / aedLerpTime;
-            GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = Quaternion.Lerp(aedStartRotation, aedBackRotation, perc);
+        } else if (scenarioNumber == 2) {
+            
         } else {
-            GameObject.Find("AEDPerson").GetComponent<RectTransform>().rotation = aedStartRotation;
+            Debug.Log("Scenario Number not properly specified!");
         }
     }
 
@@ -170,6 +175,8 @@ public class PlayerController : MonoBehaviour {
         Debug.Log(question);
         
         if(scenarioNumber == 1) {
+            //Scenario 1 code here
+            
             if (question == noOfQuestions) {
                 StartCoroutine("queAmbulance");
                 question++;
@@ -201,7 +208,19 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         } else if (scenarioNumber == 2) {
-            //Scenario 2 code here
+            //Scenario 2 code here            
+            if (question == noOfQuestions) { 
+                GameObject.Find("BackButton").gameObject.SetActive(false);
+                GameObject.Find("Scenario Text").gameObject.SetActive(false);
+                
+                endOfScenario = true;
+                EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas  
+            } else if(question <= noOfQuestions) {
+                StartCoroutine("nextQuestion");
+                if (question == 0) {
+                    
+                }
+            } 
         }
     }
     
