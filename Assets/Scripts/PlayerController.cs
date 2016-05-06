@@ -350,6 +350,7 @@ public class PlayerController : MonoBehaviour {
                 
             StartCoroutine(moveObject(player, GameObject.Find("Player Target (1)"), 1.25f));
             yield return StartCoroutine(moveObject(EMTS, emtTar1, 1.0f));
+            startNextQuestion();
 
             /*
             // EMT1 rotate 90 degrees left
