@@ -53,7 +53,7 @@ public class EndScenario : MonoBehaviour {
         }
         else if(player.scenarioNumber == 2)
         {
-            if (scenario.totalAnswers <= 11)
+            if (scenario.totalAnswers <= 10)
             {
                 // Show 3 stars
                 scenario.Stars = 3;
