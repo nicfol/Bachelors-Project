@@ -79,6 +79,7 @@ public class Data : MonoBehaviour {
                 if (scenario_1[i].Stars > tempStars)
                 {
                     s = scenario_1[i];
+                    tempStars = scenario_1[i].Stars;
                 }
             }
         }
@@ -90,6 +91,7 @@ public class Data : MonoBehaviour {
                 if (scenario_2[i].Stars > tempStars)
                 {
                     s = scenario_2[i];
+                    tempStars = scenario_2[i].Stars;
                 }
             }
         }
