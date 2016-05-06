@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Challenge : MonoBehaviour {
 
@@ -17,10 +18,12 @@ public class Challenge : MonoBehaviour {
 	    if(previousChallenge.GetComponent<Stars>().scenario.Stars >= 2)
         {
             overlay.SetActive(false);
+            GameObject.Find("Challenge_2").gameObject.GetComponent<Selectable>().interactable = true;
         }
         else
         {
             overlay.SetActive(true);
+            GameObject.Find("Challenge_2").gameObject.GetComponent<Selectable>().interactable = false;
         }
 	}
 }
