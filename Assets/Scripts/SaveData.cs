@@ -35,27 +35,43 @@ public class SaveData : MonoBehaviour {
             scenario = 2;
         }
         
-        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
-        //string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        //string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+        string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
         if (!File.Exists(path))
         {
             string[] createText = new String[1];
 
-
-
-            createText[lastScenario] =
+            if(scenario == 1)
+            {
+                createText[lastScenario] =
                 "Scenario: " + scenario.ToString() + Environment.NewLine +
                 "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
                 "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
                 "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
                 "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
                 "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+            } else if(scenario == 2)
+            {
+                createText[lastScenario] =
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine;
+            }
+
+
+            
 
             File.WriteAllLines(path, createText);
         }
         else
         {
-            string appendText =
+            string appendText = "";
+            if(scenario == 1)
+            {
+                appendText =
                 Environment.NewLine +
                 "Scenario: " + scenario.ToString() + Environment.NewLine +
                 "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
@@ -63,6 +79,18 @@ public class SaveData : MonoBehaviour {
                 "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
                 "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
                 "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+            } else if(scenario == 2)
+            {
+                appendText =
+                Environment.NewLine +
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine;
+            }
+            
 
             File.AppendAllText(path, appendText);
         }
