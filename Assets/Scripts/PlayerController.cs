@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System;
 
 public class PlayerController : MonoBehaviour {
     
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour {
     private float transitionDuration = 2.5f;
     private Quaternion s2PlayerFinalRotation;
     private bool s2RotatePlayerFinal;
+    private int lastScenario;
 
     void Start () {
         newScenario = new Scenario();
@@ -416,6 +419,101 @@ public class PlayerController : MonoBehaviour {
         
         questionObjects[question].gameObject.SetActive(true);   //Enables the answers for the next question
         question ++;  //Adds one to the question so we can move on to the next question
+        
+    }
+
+    public void SaveCurrentData()
+    {
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+
+        if (scenarioNumber == 1)
+        {
+            lastScenario = Data.scenario_1.Count - 1;
+
+            if (!File.Exists(path))
+            {
+                string[] createText = {
+                "Scenario: " + scenarioNumber.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine };
+                try
+                {
+                    File.WriteAllLines(path, createText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            else
+            {
+                string appendText =
+                    Environment.NewLine +
+                    "Scenario: " + scenarioNumber.ToString() + Environment.NewLine +
+                    "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                    "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                    "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                    "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                    "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+                try
+                {
+                    File.AppendAllText(path, appendText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
+
+        if(scenarioNumber == 2)
+        {
+            lastScenario = Data.scenario_2.Count - 1;
+
+            if (!File.Exists(path))
+            {
+                string[] createText = {
+                "Scenario: " + scenarioNumber.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine };
+                try
+                {
+                    File.WriteAllLines(path, createText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            else
+            {
+                string appendText =
+                    Environment.NewLine +
+                    "Scenario: " + scenarioNumber.ToString() + Environment.NewLine +
+                    "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                    "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                    "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                    "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                    "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine;
+                try
+                {
+                    File.AppendAllText(path, appendText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
+
+
+
         
     }
         

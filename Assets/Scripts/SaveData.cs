@@ -14,11 +14,115 @@ public class SaveData : MonoBehaviour {
     {
         previousScene = PlayerPrefs.GetString("PrevScene");
 
-        if(previousScene == "Scenario 1" || previousScene == "Scenario 2")
+        //if(previousScene == "Scenario 1" || previousScene == "Scenario 2")
+        //{
+        //    SaveAllData();
+        //}
+
+        if(previousScene == "Scenario 1")
         {
-            SaveAllData();
+            SaveScenario1Data();
+            Debug.Log("Scenario 1 save data ran");
+        }
+
+        if (previousScene == "Scenario 2")
+        {
+            SaveScenario2Data();
+            Debug.Log("Scenario 2 save data ran");
         }
     }
+
+    void SaveScenario1Data()
+    {
+        Debug.Log("Processing data recieved from scenario : " + previousScene);
+
+        lastScenario = Data.scenario_1.Count - 1;
+        scenario = 1;
+
+        Debug.Log("SaveAllData method is now running !");
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+        //string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        if (!File.Exists(path))
+        {
+            string[] createText = {
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine };
+        try { 
+            File.WriteAllLines(path, createText);
+        } catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+        else
+        {
+            string appendText =
+                Environment.NewLine +
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_1[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_1[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_1[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_1[lastScenario].Stars.ToString() + Environment.NewLine;
+            try { 
+            File.AppendAllText(path, appendText);
+        } catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }            
+    }
+
+    void SaveScenario2Data()
+    {
+        Debug.Log("Processing data recieved from scenario : " + previousScene);
+
+        lastScenario = Data.scenario_2.Count - 1;
+        scenario = 2;
+
+        Debug.Log("SaveAllData method is now running !");
+        string path = Application.persistentDataPath + Path.DirectorySeparatorChar + Data.ParticipantsName + ".txt";
+        //string path = @"c:\P6Data\" + Data.ParticipantsName + ".txt";
+        if (!File.Exists(path))
+        {
+            string[] createText = {
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine };
+        try { 
+            File.WriteAllLines(path, createText);
+        } catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+        else
+        {
+            string appendText =
+                Environment.NewLine +
+                "Scenario: " + scenario.ToString() + Environment.NewLine +
+                "Attempt: " + (lastScenario + 1).ToString() + Environment.NewLine +
+                "Total answers: " + Data.scenario_2[lastScenario].totalAnswers.ToString() + Environment.NewLine +
+                "Correct answers: " + Data.scenario_2[lastScenario].correctAnswers.ToString() + Environment.NewLine +
+                "Wrong answers: " + Data.scenario_2[lastScenario].wrongAnswers.ToString() + Environment.NewLine +
+                "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine;
+        try {
+            File.AppendAllText(path, appendText);
+        } catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+    }
+
+
 
     void SaveAllData()
     {
@@ -74,9 +178,13 @@ public class SaveData : MonoBehaviour {
             Debug.Log(previousScene);
             Debug.Log(createText[lastScenario]);
 
-
+            try { 
             File.WriteAllLines(path, createText);
+        } catch (Exception e)
+        {
+            Debug.Log(e);
         }
+    }
         else
         {
             Debug.Log("Appending data for Scenario 1...");
@@ -107,9 +215,13 @@ public class SaveData : MonoBehaviour {
                 "Stars: " + Data.scenario_2[lastScenario].Stars.ToString() + Environment.NewLine;
                 Debug.Log("Data saved !");
             }
-            
 
-            File.AppendAllText(path, appendText);
+            try {
+                File.AppendAllText(path, appendText);
+            } catch (Exception e)
+            {
+                Debug.Log(e);
+            }
             Debug.Log("##################################################################_-----------_#_#_#_#_#__#_#__#_#");
             Debug.Log(scenario);
             Debug.Log(previousScene);
