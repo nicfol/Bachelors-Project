@@ -178,12 +178,11 @@ public class PlayerController : MonoBehaviour {
             //Scenario 1 code here
             
             if (question == noOfQuestions) {
-                StartCoroutine("queAmbulance");
-                question++;
-            } else if (question == noOfQuestions + 1) {
                 GameObject.Find("BackButton").gameObject.SetActive(false);
                 GameObject.Find("Scenario Text").gameObject.SetActive(false);
-                
+                StartCoroutine("queAmbulance");
+                question++;
+            } else if (question == noOfQuestions + 1) {                
                 endOfScenario = true;
                 EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
             } else if(question <= noOfQuestions) {
@@ -213,12 +212,24 @@ public class PlayerController : MonoBehaviour {
                 GameObject.Find("BackButton").gameObject.SetActive(false);
                 GameObject.Find("Scenario Text").gameObject.SetActive(false);
                 
+                StartCoroutine("queAmbulance");
+                question++;
+
+            } else if(question == noOfQuestions + 1) { 
                 endOfScenario = true;
-                EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas  
+                EndSceneObject.gameObject.SetActive(true);  //Enables the end scene canvas            
             } else if(question <= noOfQuestions) {
                 StartCoroutine("nextQuestion");
                 if (question == 0) {
-                    
+                    Debug.Log("90 to left");
+                    /*
+                    // Rotate player 90 degrees left
+                    */
+                } else if(question == 10) {
+                    Debug.Log("90 to left");
+                    /*
+                    // Rotate player 90 degrees left
+                    */
                 }
             } 
         }
@@ -238,32 +249,47 @@ public class PlayerController : MonoBehaviour {
     }
         
     IEnumerator queAmbulance() {
-        
+            GameObject EMTS = GameObject.Find("EMTS");
+            GameObject deadPerson = GameObject.Find("Dead Person");
+            
+            GameObject emtTar1 = GameObject.Find("EMT Target 1");
+            
         //THIS IS DISGUSTING
+        if(scenarioNumber == 1) {
         
-        GameObject ambulance = GameObject.Find("Ambulance");
-        GameObject EMTS = GameObject.Find("EMTS");
-        GameObject deadPerson = GameObject.Find("Dead Person");
-        
-        GameObject AmbTar1 = GameObject.Find("Ambulance Target 1");
-        GameObject AmbTar2 = GameObject.Find("Ambulance Target 2");
-        
-        GameObject emtTar2 = GameObject.Find("EMT Target 2");
-        
-        StartCoroutine(moveObject(ambulance, AmbTar1, 2.0f));
-        ambulance.GetComponent<AudioSource>().PlayDelayed(1.7f);
-        yield return StartCoroutine(moveObject(EMTS, AmbTar1, 2.0f));
-        yield return StartCoroutine(moveObject(EMTS, GameObject.Find("EMT Target 1"), 1f));
-        
-        StartCoroutine(moveObject(EMTS, emtTar2, 1f));
-        yield return StartCoroutine(moveObject(deadPerson, emtTar2, 1f));
-        
-        StartCoroutine(moveObject(ambulance, AmbTar2, 2f));
-        StartCoroutine(moveObject(deadPerson, AmbTar2, 2f));
-        yield return StartCoroutine(moveObject(EMTS, AmbTar2, 2f));
-        
-        startNextQuestion();
-        
+            GameObject ambulance = GameObject.Find("Ambulance");
+            
+            GameObject emtTar2 = GameObject.Find("EMT Target 2");
+            
+            GameObject AmbTar1 = GameObject.Find("Ambulance Target 1");
+            GameObject AmbTar2 = GameObject.Find("Ambulance Target 2");
+
+            StartCoroutine(moveObject(ambulance, AmbTar1, 2.0f));
+            ambulance.GetComponent<AudioSource>().PlayDelayed(1.7f);
+            yield return StartCoroutine(moveObject(EMTS, AmbTar1, 2.0f));
+            yield return StartCoroutine(moveObject(EMTS, emtTar1, 1f));
+            
+            StartCoroutine(moveObject(EMTS, emtTar2, 1f));
+            yield return StartCoroutine(moveObject(deadPerson, emtTar2, 1f));
+            
+            StartCoroutine(moveObject(ambulance, AmbTar2, 2f));
+            StartCoroutine(moveObject(deadPerson, AmbTar2, 2f));
+            yield return StartCoroutine(moveObject(EMTS, AmbTar2, 2f));
+            
+            startNextQuestion();
+        } else if (scenarioNumber == 2) {
+                
+            StartCoroutine(moveObject(player, GameObject.Find("Player Target (1)"), 1.25f));
+            yield return StartCoroutine(moveObject(EMTS, emtTar1, 1.0f));
+            
+            /*
+            // EMT1 rotate 90 degrees left
+            */
+            
+            /*
+            // EMT2 rotate 90 degrees left
+            */
+        }    
         Debug.Log("queAmbulance done");
 
         yield return null;
