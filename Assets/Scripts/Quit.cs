@@ -4,16 +4,51 @@ using System.IO;
 using System;
 
 public class Quit : MonoBehaviour {
+    int buttonCount = 0;
+    float buttonCooler = 0.5f;
+    bool hasTapped = false;
+    public GameObject confirmationBox;
 
-	// Use this for initialization
-	void Start () {
+    bool oneClick;
+    bool timerRunning;
+    float lastClickTime;
+    float delay;
+    float catchTime = 0.25f;
+
+    // Use this for initialization
+    void Start () {
+        
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    void Update() {
+        if (hasTapped)
+        {
+            if (Time.time - lastClickTime < catchTime)
+            {
+                //double click
+                confirmationBox.GetComponent<ShowHide>().showhideGO();
+            }
+            else {
+                //normal click
+                
+            }
+            lastClickTime = Time.time;
+            hasTapped = false;
+        }
+        
+    }
+
+    public void Tap()
+    {
+        hasTapped = true;
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 
     public void SaveTimeAndProgess()
     {
