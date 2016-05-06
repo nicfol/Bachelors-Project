@@ -7,47 +7,47 @@ public class Quit : MonoBehaviour {
     int buttonCount = 0;
     float buttonCooler = 0.5f;
     bool hasTapped = false;
-	// Use this for initialization
-	void Start () {
+    public GameObject confirmationBox;
+
+    bool oneClick;
+    bool timerRunning;
+    float lastClickTime;
+    float delay;
+    float catchTime = 0.25f;
+
+    // Use this for initialization
+    void Start () {
+        
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-        if (Tap())
+    // Update is called once per frame
+    void Update() {
+        if (hasTapped)
         {
-
-            if (buttonCooler > 0 && buttonCount == 1/*Number of Taps you want Minus One*/)
+            if (Time.time - lastClickTime < catchTime)
             {
-                //Has double tapped
-                Debug.Log("Double tap");
+                //double click
+                confirmationBox.GetComponent<ShowHide>().showhideGO();
             }
             else {
-                buttonCooler = 0.5f;
-                buttonCount += 1;
+                //normal click
+                
             }
-
+            lastClickTime = Time.time;
             hasTapped = false;
         }
-
-        if (buttonCooler > 0)
-        {
-
-            buttonCooler -= 1 * Time.deltaTime;
-
-        }
-        else {
-            buttonCount = 0;
-        }
-
+        
     }
 
-    public bool Tap()
+    public void Tap()
     {
         hasTapped = true;
-        buttonCount++;
-        return hasTapped;
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 
     public void SaveTimeAndProgess()
