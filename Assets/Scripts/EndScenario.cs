@@ -26,7 +26,7 @@ public class EndScenario : MonoBehaviour {
 	void Update () {
 
 
-        currentText.text = "You used "+ scenario.totalAnswers.ToString() + " attempts.\nYou got " + scenario.correctAnswers.ToString() + " correct answers.\n You got " + scenario.wrongAnswers.ToString() + " wrong answers.";
+        currentText.text = "Du har brugt "+ scenario.totalAnswers.ToString() + " Forsøg.\nDu fik " + scenario.correctAnswers.ToString() + " svar rigtigt.\n Du havde " + scenario.wrongAnswers.ToString() + " forkerte svar.";
         if(player.scenarioNumber == 1)
         {
             if (scenario.totalAnswers <= 14)
