@@ -24,6 +24,8 @@ public class Data : MonoBehaviour {
     public static bool[] scenario1ProgStars;
     public static bool[] scenario2ProgStars;
 
+    public static bool TimeAndProgressSaved { get; set; }
+
     public static Achievement ach1;
     public static Achievement ach2;
     public static Achievement ach3;

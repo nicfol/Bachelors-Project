@@ -9,10 +9,7 @@ public class Quit : MonoBehaviour {
     bool hasTapped = false;
     public GameObject confirmationBox;
 
-    bool oneClick;
-    bool timerRunning;
     float lastClickTime;
-    float delay;
     float catchTime = 0.25f;
 
     // Use this for initialization
@@ -29,6 +26,12 @@ public class Quit : MonoBehaviour {
             {
                 //double click
                 confirmationBox.GetComponent<ShowHide>().showhideGO();
+                if (!Data.TimeAndProgressSaved)
+                {
+                    SaveTimeAndProgess();
+                    Data.TimeAndProgressSaved = true;
+                }
+                
             }
             else {
                 //normal click
