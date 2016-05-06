@@ -107,7 +107,7 @@ public class AchievementHandler : MonoBehaviour {
         // Unlock Achievement 5 when user reaches 100%
         if (!Data.ach5.isUnlocked)
         {
-            if (Data.Progression >= 100)
+            if (Data.Progression >= 98)
             {
                 Data.ach5.isUnlocked = true;
                 achievementPopup.DisplayPopup(Data.ach5.Name);
