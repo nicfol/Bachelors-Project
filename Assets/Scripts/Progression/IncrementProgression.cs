@@ -11,7 +11,7 @@ public class IncrementProgression : MonoBehaviour {
     
     void Start()
     {
-        incrementValue = 6f;
+        incrementValue = 7f;
         sceneName = SceneManager.GetActiveScene().name;
         if (!Data.Scenes.Any(str => str.Contains(sceneName)))
         {
