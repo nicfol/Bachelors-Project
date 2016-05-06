@@ -27,29 +27,54 @@ public class EndScenario : MonoBehaviour {
 
 
         currentText.text = "You used "+ scenario.totalAnswers.ToString() + " attempts.\nYou got " + scenario.correctAnswers.ToString() + " correct answers.\n You got " + scenario.wrongAnswers.ToString() + " wrong answers.";
-
-        if (scenario.correctAnswers >= player.threeStarsMin)
+        if(player.scenarioNumber == 1)
         {
-            // Show 3 stars
-            scenario.Stars = 3;
+            if (scenario.totalAnswers <= 14)
+            {
+                // Show 3 stars
+                scenario.Stars = 3;
 
-        }
-        else if (scenario.correctAnswers >= player.twoStarsMin)
-        {
-            // Show 2 stars
-            scenario.Stars = 2;
+            }
+            else if (scenario.totalAnswers <= 18)
+            {
+                // Show 2 stars
+                scenario.Stars = 2;
 
+            }
+            else if (scenario.totalAnswers <= 24)
+            {
+                // Show 1 star  
+                scenario.Stars = 1;
+            }
+            else
+            {
+                scenario.Stars = 0;
+            }
         }
-        else if(scenario.correctAnswers >= player.oneStarMin)
+        else if(player.scenarioNumber == 2)
         {
-            // Show 1 star  
-            scenario.Stars = 1;
-        }
-        else
-        {
-            scenario.Stars = 0;
-        }
+            if (scenario.totalAnswers <= 11)
+            {
+                // Show 3 stars
+                scenario.Stars = 3;
 
+            }
+            else if (scenario.totalAnswers <= 14)
+            {
+                // Show 2 stars
+                scenario.Stars = 2;
+
+            }
+            else if (scenario.totalAnswers <= 19)
+            {
+                // Show 1 star  
+                scenario.Stars = 1;
+            }
+            else
+            {
+                scenario.Stars = 0;
+            }
+        }
         
     }
 }
