@@ -19,9 +19,11 @@ public class HardwareButtonHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("Back button pressed, returns to " + previousScene);
-            SceneManager.LoadScene(previousScene);
+        if(currentScene != "Scenario 1" && currentScene != "Scenario 2" && previousScene != "Scenario 1" && previousScene != "Scenario 2") {
+            if(Input.GetKeyDown(KeyCode.Escape)) {
+                Debug.Log("Back button pressed, returns to " + previousScene);
+                SceneManager.LoadScene(previousScene);
+            }
         }
 	}
 }
