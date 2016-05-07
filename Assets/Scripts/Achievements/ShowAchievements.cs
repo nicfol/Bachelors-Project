@@ -46,6 +46,7 @@ public class ShowAchievements : MonoBehaviour
 
             if (Data.achievements[i].isUnlocked)
             {
+                
                 checkmark.SetActive(true);
             }
         }
