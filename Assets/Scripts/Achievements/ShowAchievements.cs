@@ -12,6 +12,8 @@ public class ShowAchievements : MonoBehaviour
     GameObject checkmark;
 
     bool showAchievements;
+    
+    public Sprite newBackground;
 
     Vector2 pos;
     // Use this for initialization
@@ -46,7 +48,8 @@ public class ShowAchievements : MonoBehaviour
 
             if (Data.achievements[i].isUnlocked)
             {
-                
+                GameObject backdrop = ach.gameObject.transform.GetChild(0).gameObject;
+                backdrop.GetComponent<Image>().sprite = newBackground;
                 checkmark.SetActive(true);
             }
         }
