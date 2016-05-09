@@ -64,14 +64,16 @@ public class Quit : MonoBehaviour {
         if (!File.Exists(path))
         {
             string[] createText = new String[1];
-
-            createText[0] = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString();
+            string scenes = string.Join(", ", Data.Scenes.ToArray());
+            createText[0] = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString() + Environment.NewLine + "Scenes visited: " + scenes;
 
             File.WriteAllLines(path, createText);
         }
         else
         {
-            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString();
+            string scenes = string.Join(", ", Data.Scenes.ToArray());
+            string appendText = Environment.NewLine + "Total time: " + Data.TotalTime.ToString() + Environment.NewLine + "Progress: " + Mathf.CeilToInt(Data.Progression).ToString() + Environment.NewLine + "Scenes visited: " + scenes;
+
             File.AppendAllText(path, appendText);
         }
 

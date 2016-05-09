@@ -330,6 +330,9 @@ public class PlayerController : MonoBehaviour {
         if(scenarioNumber == 1) {
         
             GameObject ambulance = GameObject.Find("Ambulance");
+            AudioSource[] audioSources = ambulance.GetComponents<AudioSource>();
+            AudioSource wheelsScreeching = audioSources[0];
+            AudioSource engineRunning = audioSources[1];
             
             GameObject emtTar2 = GameObject.Find("EMT Target 2");
             
@@ -337,7 +340,8 @@ public class PlayerController : MonoBehaviour {
             GameObject AmbTar2 = GameObject.Find("Ambulance Target 2");
 
             StartCoroutine(moveObject(ambulance, AmbTar1, 2.0f));
-            ambulance.GetComponent<AudioSource>().PlayDelayed(1.7f);
+            engineRunning.Play();
+            wheelsScreeching.PlayDelayed(1.7f);
             yield return StartCoroutine(moveObject(EMTS, AmbTar1, 2.0f));
             yield return StartCoroutine(moveObject(EMTS, emtTar1, 1f));
             
