@@ -9,6 +9,8 @@ public class HardwareButtonHandler : MonoBehaviour {
     
 	// Use this for initialization
 	void Start () {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         previousScene = PlayerPrefs.GetString("CurrentScene"); 
 	    PlayerPrefs.SetString("PrevScene", previousScene);
         
