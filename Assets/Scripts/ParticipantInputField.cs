@@ -9,6 +9,7 @@ public class ParticipantInputField : MonoBehaviour {
     void Start()
     {
         Data.Scenes.Add("MainMenu");
+        Data.Scenes.Add("Achievements");
     }
 
     public void SetParticipantName()
